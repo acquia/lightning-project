@@ -17,6 +17,14 @@
             "url": "https://packagist.drupal-composer.org"
         }
     ],
+    "scripts": {
+      "post-install-cmd": [
+        "DrupalComposer\\DrupalScaffold\\Plugin::scaffold"
+      ],
+      "post-update-cmd": [
+        "DrupalComposer\\DrupalScaffold\\Plugin::scaffold"
+      ]
+    },
     "config": {
       "bin-dir": "bin/"
     },
