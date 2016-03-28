@@ -25,15 +25,20 @@
     "scripts": {
       "post-install-cmd": [
         "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-	"mv vendor/bower_components www/profiles/contrib/lightning/libraries"
+        "Acquia\\Lightning\\ScriptHandler::deployLibraries"
       ],
       "post-update-cmd": [
         "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-	"mv vendor/bower_components www/profiles/contrib/lightning/libraries"
-      ]
+        "Acquia\\Lightning\\ScriptHandler::deployLibraries"
+      ],
     },
     "config": {
       "bin-dir": "bin/"
+    },
+    "autoload": {
+      "classmap": [
+        "scripts/ScriptHandler.php"
+      ]
     },
     "extra": {
       "installer-paths": {
