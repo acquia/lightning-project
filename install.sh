@@ -1,4 +1,4 @@
 #!/bin/sh
-git clone https://github.com/phenaproxima/lightning-project.git
+git clone https://github.com/acquia/lightning-project.git
 cd lightning-project
 composer update
