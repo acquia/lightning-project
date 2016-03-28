@@ -9,7 +9,8 @@
         "composer/installers": "^1.0",
         "drupal-composer/drupal-scaffold": "^1.2",
         "cweagans/composer-patches": "dev-master",
-        "drupal/lightning": "dev-8.x-1.x"
+        "drupal/lightning": "dev-8.x-1.x",
+        "php-kit/composer-bower-plugin": "^1.0"
     },
     "repositories": [
         {
@@ -23,10 +24,12 @@
     ],
     "scripts": {
       "post-install-cmd": [
-        "DrupalComposer\\DrupalScaffold\\Plugin::scaffold"
+        "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+	"mv vendor/bower_components www/profiles/contrib/lightning/libraries"
       ],
       "post-update-cmd": [
-        "DrupalComposer\\DrupalScaffold\\Plugin::scaffold"
+        "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+	"mv vendor/bower_components www/profiles/contrib/lightning/libraries"
       ]
     },
     "config": {
