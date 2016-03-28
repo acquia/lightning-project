@@ -16,10 +16,6 @@
         {
             "type": "composer",
             "url": "https://packagist.drupal-composer.org"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/phenaproxima/composer-patches"
         }
     ],
     "scripts": {
@@ -54,6 +50,7 @@
         "www/themes/contrib/{$name}": [
           "type:drupal-theme"
         ]
-      }
+      },
+      "enable-patching": true
     }
 }

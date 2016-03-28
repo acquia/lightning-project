@@ -9,5 +9,7 @@ You will need:
 * [Bower](http://bower.io) installed in your PATH. (This will require you to install [Node](https://nodejs.org), which includes the NPM package manager.)
 
 ```
-$ curl -sS https://raw.githubusercontent.com/acquia/lightning-project/master/install.sh | sh
+$ git clone https://github.com/acquia/lightning-project.git MYPROJECT
+$ cd MYPROJECT
+$ composer install
 ```
