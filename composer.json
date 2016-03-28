@@ -30,7 +30,7 @@
       "post-update-cmd": [
         "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
         "Acquia\\Lightning\\ScriptHandler::deployLibraries"
-      ],
+      ]
     },
     "config": {
       "bin-dir": "bin/"
