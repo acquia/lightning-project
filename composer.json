@@ -8,7 +8,9 @@
     "require": {
         "composer/installers": "^1.0",
         "drupal-composer/drupal-scaffold": "^1.2",
-        "cweagans/composer-patches": "^1.4"
+        "cweagans/composer-patches": "dev-master",
+        "drupal/lightning": "dev-8.x-1.x",
+        "php-kit/composer-bower-plugin": "^1.0"
     },
     "repositories": [
         {
@@ -16,8 +18,39 @@
             "url": "https://packagist.drupal-composer.org"
         }
     ],
-    "conflict": {
-        "drupal/drupal": "*"
+    "scripts": {
+      "post-install-cmd": [
+        "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+        "Acquia\\Lightning\\ScriptHandler::deployLibraries"
+      ],
+      "post-update-cmd": [
+        "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+        "Acquia\\Lightning\\ScriptHandler::deployLibraries"
+      ]
+    },
+    "config": {
+      "bin-dir": "bin/"
+    },
+    "autoload": {
+      "classmap": [
+        "scripts/ScriptHandler.php"
+      ]
+    },
+    "extra": {
+      "installer-paths": {
+        "www/core": [
+          "drupal/core"
+        ],
+        "www/modules/contrib/{$name}": [
+          "type:drupal-module"
+        ],
+        "www/profiles/contrib/{$name}": [
+          "type:drupal-profile"
+        ],
+        "www/themes/contrib/{$name}": [
+          "type:drupal-theme"
+        ]
+      },
+      "enable-patching": true
     }
 }
-
