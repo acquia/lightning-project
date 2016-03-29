@@ -9,8 +9,7 @@
         "composer/installers": "^1.0",
         "drupal-composer/drupal-scaffold": "^1.2",
         "cweagans/composer-patches": "dev-master",
-        "drupal/lightning": "dev-8.x-1.x",
-        "php-kit/composer-bower-plugin": "^1.0"
+        "drupal/lightning": "dev-8.x-1.x"
     },
     "repositories": [
         {
@@ -38,17 +37,20 @@
     },
     "extra": {
       "installer-paths": {
-        "www/core": [
+        "docroot/core": [
           "drupal/core"
         ],
-        "www/modules/contrib/{$name}": [
+        "docroot/modules/contrib/{$name}": [
           "type:drupal-module"
         ],
-        "www/profiles/contrib/{$name}": [
+        "docroot/profiles/contrib/{$name}": [
           "type:drupal-profile"
         ],
-        "www/themes/contrib/{$name}": [
+        "docroot/themes/contrib/{$name}": [
           "type:drupal-theme"
+        ],
+        "drush/contrib/{$name}": [
+          "type:drupal-drush"
         ]
       },
       "enable-patching": true
