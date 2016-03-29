@@ -28,6 +28,8 @@ class ScriptHandler {
         }
       }
       if (isset($lightning)) {
+        $lightning = str_replace('{$name}', 'lightning', $lightning);
+
         $executor = new ProcessExecutor($event->getIO());
         $output = NULL;
         $executor->execute('npm run install-libraries', $output, $lightning);
