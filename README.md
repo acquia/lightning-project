@@ -9,7 +9,6 @@ You will need:
 * [Node](https://nodejs.org), which includes the NPM package manager.
 
 ```
-$ git clone https://github.com/acquia/lightning-project.git MYPROJECT
-$ cd MYPROJECT
-$ composer install
+$ composer create-project acquia/lightning-project:dev-master MY_PROJECT
 ```
+
