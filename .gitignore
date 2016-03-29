@@ -1,17 +1,12 @@
-.DS_Store
-
-# Ignore PHPStorm configuration.
-.idea/
-
 # Ignore binaries.
 /bin
 
 # Ignore non-custom parts of Drupal.
-/www/core
-/www/modules/contrib
-/www/profiles/contrib
-/www/themes/contrib
-/www/sites/default/files
+/docroot/core
+/docroot/modules/contrib
+/docroot/profiles/contrib
+/docroot/themes/contrib
+/docroot/sites/default/files
 
 # Ignore Composer-managed dependencies.
 vendor/
