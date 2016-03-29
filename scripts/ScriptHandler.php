@@ -8,7 +8,7 @@
 namespace Acquia\Lightning;
 
 use Composer\Script\Event;
-use Composer\Util\Filesystem;
+use Composer\Util\ProcessExecutor;
 
 class ScriptHandler {
 
@@ -28,10 +28,9 @@ class ScriptHandler {
         }
       }
       if (isset($lightning)) {
-        $libraries = str_replace('{$name}', 'lightning', $lightning) . '/libraries';
-        $fs = new Filesystem();
-        $fs->removeDirectory($libraries);
-        $fs->rename('vendor/bower_components', $libraries);
+        $executor = new ProcessExecutor($event->getIO());
+        $output = NULL;
+        $executor->execute('npm run install-libraries', $output, $lightning);
       }
     }
   }
