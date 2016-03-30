@@ -32,3 +32,8 @@ The magic is that Composer, unlike Drush, is a *dependency manager*. If module `
 But to be clear: **you still need Drush**. Tasks such as database updates (```drush updatedb```) are still firmly in Drush's province, and it's awesome at that stuff. This installer will install a copy of Drush (local to the project) in the ```bin``` directory.
 
 **Composer is only responsible for maintaining the code base**.
+
+## Source Control
+If you peek at the ```.gitignore``` we provide, you'll see that certain directories, including all directories containing contributed projects, are excluded from source control. This might be a bit disconcerting if you're newly arrived from Planet Drush, but in a Composer-based project like this one, **you SHOULD NOT commit your installed dependencies to source control**.
+
+When you set up the project, Composer will create a file called ```composer.lock```, which is a list of exactly what versions of what dependencies were installed. **You SHOULD commit ```composer.lock``` to source control.** Thus, when your colleagues want to spin up their own copies of the project, all they'll have to do is run ```composer install```, which will install the correct versions of everything listed in ```composer.lock```.
