@@ -13,7 +13,7 @@ $ composer create-project acquia/lightning-project:dev-master MY_PROJECT --no-in
 Composer will create a new directory called MY_PROJECT containing a ```docroot``` directory with a full Lightning code base therein. You can then install it like you would any other Drupal site.
 
 ## Maintenance
-```drush make```, ```drush pm-download```, ```drush pm-update``` and their ilk are the old-school way of maintaining your code base. Forget them. You're in Compoer land now!
+```drush make```, ```drush pm-download```, ```drush pm-update``` and their ilk are the old-school way of maintaining your code base. Forget them. You're in Composer land now!
 
 Let this handy table be your guide:
 
