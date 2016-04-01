@@ -8,7 +8,7 @@ You will need the following installed:
 
 When you have those, run this command:
 ```
-$ composer create-project acquia/lightning-project:8.x-dev MY_PROJECT --no-interaction
+$ composer create-project acquia/lightning-project:8.1.* MY_PROJECT --no-interaction
 ```
 Composer will create a new directory called MY_PROJECT containing a ```docroot``` directory with a full Lightning code base therein. You can then install it like you would any other Drupal site.
 
