@@ -11,10 +11,10 @@
         "behat/mink": "~1.6",
         "behat/mink-goutte-driver": "~1.2",
         "jcalderonzumba/gastonjs": "~1.0.2",
-        "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
         "mikey179/vfsStream": "~1.2",
         "phpunit/phpunit": "~4.8",
-        "symfony/css-selector": "2.7.*"
+        "symfony/css-selector": "2.7.*",
+        "se/selenium-server-standalone": "^2.53"
     },
     "require": {
         "composer/installers": "^1.0",
