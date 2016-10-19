@@ -93,7 +93,7 @@ before_script:
   - cd ..
 
 script:
-  - bin/behat --strict
+  - bin/behat --strict --stop-on-failure
 
 matrix:
   fast_finish: true
