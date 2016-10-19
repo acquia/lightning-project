@@ -69,6 +69,12 @@ install:
   - cd docroot
   - drush site-install lightning --yes --account-pass=admin --db-url=mysql://root:@localhost/drupal
 
+  # Copy behat file from Lightning
+  - cp ./profiles/contrib/lightning/behat.* ../
+  - sed -i -e 's/%paths.base%\/tests\/features/docroot\/profiles\/contrib\/lightning\/tests\/features/g' ../behat.yml
+  - sed -i -e 's/tests\/features\/bootstrap/docroot\/profiles\/contrib\/lightning\/tests\/features\/bootstrap/g' ../behat.yml
+  - sed -i -e 's/..\/..\//docroot/g' ../behat.local.yml
+
   # Update codebase to head and run db updates.
   - if [ $VERSION = "HEAD" ]; then cd ..; fi;
   - if [ $VERSION = "HEAD" ]; then rm -rf docroot/modules/contrib; fi;
@@ -76,12 +82,6 @@ install:
   - if [ $VERSION = "HEAD" ]; then composer update; fi;
   - if [ $VERSION = "HEAD" ]; then cd docroot; fi;
   - if [ $VERSION = "HEAD" ]; then drush updatedb -y; fi;
-
-  # Copy behat file from Lightning
-  - cp ./profiles/contrib/lightning/behat.* ../
-  - sed -i -e 's/%paths.base%\/tests\/features/docroot\/profiles\/contrib\/lightning\/tests\/features/g' ../behat.yml
-  - sed -i -e 's/tests\/features\/bootstrap/docroot\/profiles\/contrib\/lightning\/tests\/features\/bootstrap/g' ../behat.yml
-  - sed -i -e 's/..\/..\//docroot/g' ../behat.local.yml
 
 before_script:
   - drush runserver --default-server=builtin 8080 &>/dev/null &
