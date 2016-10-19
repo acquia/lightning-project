@@ -68,6 +68,7 @@ install:
   # Install Lightning.
   - cd docroot
   - drush site-install lightning --yes --account-pass=admin --db-url=mysql://root:@localhost/drupal
+  - drush pm-enable -yes lightning_preview
 
   # Copy behat file from Lightning
   - cp ./profiles/contrib/lightning/behat.* ../
