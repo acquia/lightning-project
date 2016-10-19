@@ -51,7 +51,7 @@ install:
   - export PATH="$HOME/.composer/vendor/bin:$TRAVIS_BUILD_DIR/bin:$PATH"
 
   # Create the MySQL database and increase the timeout (?)
-  - mysql -e 'SET GLOBAL wait_timeout = 5400;'		 +  - mysql -u root -e 'CREATE DATABASE drupal; SET GLOBAL wait_timeout = 5400;'
+  - mysql -u root -e 'CREATE DATABASE drupal; SET GLOBAL wait_timeout = 5400;'
 
   # PHP conf tweaks
   - echo 'max_execution_time = 120' >> drupal.php.ini;
