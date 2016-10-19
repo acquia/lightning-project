@@ -84,16 +84,10 @@ before_script:
   - mkdir tmp
   - selenium-server-standalone -port 4444 -log tmp/selenium2.log &
   - sleep 5
-  - cd ..
-
-  # Copy Behat configuration from Lightning.
-  - cp ./docroot/profiles/contrib/lightning/behat.* .
-  - sed -i -e 's/%paths.base%\/tests\/features/docroot\/profiles\/contrib\/lightning\/tests\/features/g' behat.yml
-  - sed -i -e 's/tests\/features\/bootstrap/docroot\/profiles\/contrib\/lightning\/tests\/features\/bootstrap/g' behat.yml
-  - sed -i -e 's/..\/..\//docroot/g' behat.local.yml
+  - cd profiles/contrib/lightning
 
 script:
-  - bin/behat --strict --stop-on-failure
+  - ../../../../bin/behat --strict --stop-on-failure
 
 matrix:
   fast_finish: true
