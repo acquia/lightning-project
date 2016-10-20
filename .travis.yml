@@ -33,23 +33,22 @@ before_install:
   - sh -e /etc/init.d/xvfb start
   - sleep 3
 
-  # Add Composer's local bin directory to the PATH so that we will be running
-  # our installed versions of Drush, PHPCS, Behat, PhantomJS, etc.
-  - export PATH="$TRAVIS_BUILD_DIR/bin:$PATH"
-
-  # Echo Chrome version
-  - google-chrome --version
-
-install:
-
   # Download Chrome Driver
   - LATEST_CHROMEDRIVER=$(wget -q -O - http://chromedriver.storage.googleapis.com/LATEST_RELEASE)
   - wget http://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER/chromedriver_linux64.zip
   - unzip chromedriver_linux64.zip
   - chmod +x chromedriver
-  - mkdir bin
-  - mv -f chromedriver bin
+  - mkdir -p $HOME/.composer/vendor/bin
+  - mv -f chromedriver $HOME/.composer/vendor/bin/
   - rm chromedriver_linux64.zip
+
+  # Echo Chrome version
+  - google-chrome --version
+
+install:
+  # Add Composer's local bin directory to the PATH so that we will be running
+  # our installed versions of Drush, PHPCS, Behat, PhantomJS, etc.
+  - export PATH="$HOME/.composer/vendor/bin:$TRAVIS_BUILD_DIR/bin:$PATH"
 
   # Create the MySQL database and increase the timeout
   - mysql -u root -e 'CREATE DATABASE drupal; SET GLOBAL wait_timeout = 5400;'
@@ -77,7 +76,7 @@ install:
   - if [ $VERSION = "HEAD" ]; then composer require drupal/lightning:dev-8.x-1.x --no-update; fi;
   - if [ $VERSION = "HEAD" ]; then composer update; fi;
   - if [ $VERSION = "HEAD" ]; then cd docroot; fi;
-  - drush updatedb --yes
+  - if [ $VERSION = "HEAD" ]; then drush updatedb -y; fi;
 
 before_script:
   - drush runserver --default-server=builtin 8080 &>/dev/null &
@@ -88,7 +87,8 @@ before_script:
   - cd profiles/contrib/lightning
 
 script:
-  - behat --strict --stop-on-failure
+  - ../../../../bin/behat --strict --stop-on-failure
 
 matrix:
   fast_finish: true
+
