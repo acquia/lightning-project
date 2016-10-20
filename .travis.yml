@@ -69,6 +69,9 @@ install:
   - cd docroot
   - drush site-install lightning --yes --account-pass=admin --db-url=mysql://root:@localhost/drupal
   - drush pm-enable lightning_preview --yes
+  # At least one test asserts exception text, which requires that all errors be
+  # echoed in the response.
+  - drush config-set system.logging error_level all --yes
 
   # Update codebase to head and run db updates.
   - if [ $VERSION = "HEAD" ]; then cd ..; fi;
