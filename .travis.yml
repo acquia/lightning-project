@@ -88,6 +88,7 @@ before_script:
 
   # Copy Behat configuration from Lightning.
   - cp ./docroot/profiles/contrib/lightning/behat.* .
+  - "sed -i -e 's/selenium2: ~/selenium2: { browser: chrome }/g' behat.yml"
   - sed -i -e 's/%paths.base%\/tests\/features/docroot\/profiles\/contrib\/lightning\/tests\/features/g' behat.yml
   - sed -i -e 's/tests\/features\/bootstrap/docroot\/profiles\/contrib\/lightning\/tests\/features\/bootstrap/g' behat.yml
   - sed -i -e 's/..\/..\//docroot/g' behat.local.yml
@@ -97,4 +98,3 @@ script:
 
 matrix:
   fast_finish: true
-
