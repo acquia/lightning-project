@@ -22,6 +22,9 @@ addons:
     - mysql-server-5.6
     - mysql-client-core-5.6
     - mysql-client-5.6
+    # Dependencies for Chrome.
+    - libappindicator1
+    - fonts-liberation
 
 before_install:
   - phpenv config-rm xdebug.ini
@@ -42,7 +45,11 @@ before_install:
   - mv -f chromedriver $HOME/.composer/vendor/bin/
   - rm chromedriver_linux64.zip
 
-  # Echo Chrome version
+  # Update Chrome.
+  - export CHROME_BIN=/usr/bin/google-chrome
+  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  - sudo dpkg -i google-chrome-stable_current_amd64.deb
+  - rm google-chrome-stable_current_amd64.deb
   - google-chrome --version
 
 install:
