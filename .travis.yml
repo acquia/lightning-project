@@ -99,7 +99,7 @@ before_script:
   - "sed -i -e 's/selenium2: ~/selenium2: { browser: chrome }/g' behat.yml"
   - sed -i -e 's/%paths.base%\/tests\/features/docroot\/profiles\/contrib\/lightning\/tests\/features/g' behat.yml
   - sed -i -e 's/tests\/features\/bootstrap/docroot\/profiles\/contrib\/lightning\/tests\/features\/bootstrap/g' behat.yml
-  - sed -i -e 's/drupal_root\: \'..\/..\/\'/drupal_root\: \'docroot\'/g' behat.local.yml
+  - sed -i -e 's/foo/bar/g' behat.local.yml
   - cat behat.yml
   - cat behat.local.yml
 
