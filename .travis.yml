@@ -101,7 +101,7 @@ before_script:
   - sed -i -e 's/tests\/features\/bootstrap/docroot\/profiles\/contrib\/lightning\/tests\/features\/bootstrap/g' behat.yml
   - FOO="../../"
   - BAR="docroot"
-  - sed -i 's/$FOO/$BAR/g' behat.local.yml
+  - sed -i -e 's/$FOO/$BAR/g' behat.local.yml
   - cat behat.yml
   - cat behat.local.yml
 
