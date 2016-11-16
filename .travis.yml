@@ -1,4 +1,7 @@
+sudo: required
+dist: trusty
 language: php
+
 cache:
   bundler: true
   apt: true
@@ -7,32 +10,56 @@ cache:
     - "$HOME/.drush/cache"
     - "$HOME/.npm"
 php:
-  - 5.5
+  - 5.6
 
 env:
   - VERSION=STABLE
   - VERSION=HEAD
 
-sudo: false
-
-mysql:
-  database: drupal
-  username: root
-  encoding: utf8
+addons:
+  apt:
+    packages:
+    # Trusty does not include MySQL by defualt.
+    - mysql-server-5.6
+    - mysql-client-core-5.6
+    - mysql-client-5.6
+    # Dependencies for Chrome.
+    - libappindicator1
+    - fonts-liberation
 
 before_install:
   - phpenv config-rm xdebug.ini
   - composer self-update
   - composer --version
 
+  # Initialize xvfb (see https://docs.travis-ci.com/user/gui-and-headless-browsers)
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3
+
+  # Download Chrome Driver
+  - LATEST_CHROMEDRIVER=$(wget -q -O - http://chromedriver.storage.googleapis.com/LATEST_RELEASE)
+  - wget http://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER/chromedriver_linux64.zip
+  - unzip chromedriver_linux64.zip
+  - chmod +x chromedriver
+  - mkdir -p $HOME/.composer/vendor/bin
+  - mv -f chromedriver $HOME/.composer/vendor/bin/
+  - rm chromedriver_linux64.zip
+
+  # Update Chrome.
+  - export CHROME_BIN=/usr/bin/google-chrome
+  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  - sudo dpkg -i google-chrome-stable_current_amd64.deb
+  - rm google-chrome-stable_current_amd64.deb
+  - google-chrome --version
+
 install:
   # Add Composer's local bin directory to the PATH so that we will be running
   # our installed versions of Drush, PHPCS, Behat, PhantomJS, etc.
   - export PATH="$HOME/.composer/vendor/bin:$TRAVIS_BUILD_DIR/bin:$PATH"
 
-  # MySQL Options
-  - mysql -e 'SET GLOBAL wait_timeout = 5400;'
-  - mysql -e "SHOW VARIABLES LIKE 'wait_timeout'"
+  # Create the MySQL database and increase the timeout
+  - mysql -u root -e 'CREATE DATABASE drupal; SET GLOBAL wait_timeout = 5400;'
 
   # PHP conf tweaks
   - echo 'max_execution_time = 120' >> drupal.php.ini;
@@ -41,7 +68,7 @@ install:
   - phpenv rehash
 
   # Install drush
-  - composer require drush/drush:^9.0
+  - composer require drush/drush:^9.0 --no-update
 
   # Build the Lightning code base.
   - composer install
@@ -49,6 +76,7 @@ install:
   # Install Lightning.
   - cd docroot
   - drush site-install lightning --yes --account-pass=admin --db-url=mysql://root:@localhost/drupal
+  - drush pm-enable lightning_preview --yes
 
   # Update codebase to head and run db updates.
   - if [ $VERSION = "HEAD" ]; then cd ..; fi;
@@ -58,21 +86,23 @@ install:
   - if [ $VERSION = "HEAD" ]; then cd docroot; fi;
   - if [ $VERSION = "HEAD" ]; then drush updatedb -y; fi;
 
-  # Copy behat file from Lightning
-  - cp ./profiles/contrib/lightning/behat.* ../
-  - sed -i -e 's/%paths.base%\/tests\/features/docroot\/profiles\/contrib\/lightning\/tests\/features/g' ../behat.yml
-  - sed -i -e 's/tests\/features\/bootstrap/docroot\/profiles\/contrib\/lightning\/tests\/features\/bootstrap/g' ../behat.yml
-  - sed -i -e 's/..\/..\//docroot/g' ../behat.local.yml
-
 before_script:
   - drush runserver --default-server=builtin 8080 &>/dev/null &
-  - phantomjs --webdriver=4444 > /dev/null &
+  # Start Selenium and dump its ginormous log into a temporary file.
+  - mkdir tmp
+  - selenium-server-standalone -port 4444 -log tmp/selenium2.log &
   - sleep 5
   - cd ..
 
+  # Copy Behat configuration from Lightning.
+  - cp ./docroot/profiles/contrib/lightning/behat.* .
+  - "sed -i -e 's/selenium2: ~/selenium2: { browser: chrome }/g' behat.yml"
+  - sed -i -e 's/%paths.base%\/tests\/features/docroot\/profiles\/contrib\/lightning\/tests\/features/g' behat.yml
+  - sed -i -e 's/tests\/features\/bootstrap/docroot\/profiles\/contrib\/lightning\/tests\/features\/bootstrap/g' behat.yml
+  - sed -i -e "s/ '..\/..\/'/ 'docroot'/g" behat.local.yml
+
 script:
-  - bin/behat --strict
+  - bin/behat --strict --stop-on-failure
 
 matrix:
   fast_finish: true
-
