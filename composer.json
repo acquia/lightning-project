@@ -65,6 +65,9 @@
                 "type:drupal-drush"
             ]
         },
-        "enable-patching": true
+        "enable-patching": true,
+        "packagist.drupal-composer.org": {
+            "discover-make-files": false
+        }
     }
 }
