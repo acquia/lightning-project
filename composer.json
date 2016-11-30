@@ -50,7 +50,7 @@
     "extra": {
         "installer-paths": {
             "docroot/core": [
-                "drupal/core"
+                "type:drupal-core"
             ],
             "docroot/modules/contrib/{$name}": [
                 "type:drupal-module"
