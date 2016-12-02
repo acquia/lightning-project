@@ -78,7 +78,6 @@ install:
   # Update codebase to head and run db updates.
   - if [ $VERSION = "HEAD" ]; then cd ..; fi;
   - if [ $VERSION = "HEAD" ]; then rm -rf docroot/modules/contrib; fi;
-  - if [ $VERSION = "HEAD" ]; then composer clear-cache; fi;
   - if [ $VERSION = "HEAD" ]; then composer require acquia/lightning:dev-8.x-2.x --no-update; fi;
   - if [ $VERSION = "HEAD" ]; then composer update; fi;
   - if [ $VERSION = "HEAD" ]; then cd docroot; fi;
