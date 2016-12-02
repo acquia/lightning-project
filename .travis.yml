@@ -64,7 +64,7 @@ install:
   - phpenv rehash
 
   # Install drush
-  - composer require drush/drush:^9.0 --no-update
+  - composer require drush/drush:^8.0 --no-update
 
   # Build the Lightning code base.
   - composer install
@@ -78,7 +78,7 @@ install:
   # Update codebase to head and run db updates.
   - if [ $VERSION = "HEAD" ]; then cd ..; fi;
   - if [ $VERSION = "HEAD" ]; then rm -rf docroot/modules/contrib; fi;
-  - if [ $VERSION = "HEAD" ]; then composer require drupal/lightning:dev-8.x-1.x --no-update; fi;
+  - if [ $VERSION = "HEAD" ]; then composer require acquia/lightning:dev-8.x-2.x --no-update; fi;
   - if [ $VERSION = "HEAD" ]; then composer update; fi;
   - if [ $VERSION = "HEAD" ]; then cd docroot; fi;
   - if [ $VERSION = "HEAD" ]; then drush updatedb -y; fi;
