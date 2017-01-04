@@ -33,13 +33,13 @@
     "scripts": {
       "post-install-cmd": [
         "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-        "Acquia\\Lightning\\ScriptHandler::deployLibraries",
-        "Acquia\\Lightning\\ScriptHandler::prepareBehat"
+        "Acquia\\Lightning\\ScriptHandler::deployLibraries"
       ],
       "post-update-cmd": [
         "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
         "Acquia\\Lightning\\ScriptHandler::deployLibraries"
-      ]
+      ],
+      "prepare-behat": "Acquia\\Lightning\\ScriptHandler::prepareBehat"
     },
     "config": {
         "bin-dir": "bin/"

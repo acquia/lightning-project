@@ -42,7 +42,7 @@ class ScriptHandler {
         ->getInstallPath($packages[0]);
     }
     else {
-      throw new \UnderflowException('acquia/lightning package(s) not found in local repository.');
+      throw new \RuntimeException('acquia/lightning package(s) not found in local repository.');
     }
 
     // If behat.yml doesn't exist in the current directory, copy it from the

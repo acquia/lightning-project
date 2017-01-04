@@ -85,12 +85,16 @@ install:
 
 before_script:
   - drush runserver --default-server=builtin 8080 &>/dev/null &
+
   # Start Selenium and dump its ginormous log into a temporary file.
   - jdk_switcher use oraclejdk8
   - mkdir tmp
   - selenium-server-standalone -port 4444 -log tmp/selenium2.log &
   - sleep 5
   - cd ..
+
+  # Prepare Behat configuration.
+  - composer run prepare-behat
 
 script:
   - bin/behat --strict --stop-on-failure
