@@ -10,7 +10,7 @@ cache:
     - "$HOME/.drush/cache"
     - "$HOME/.npm"
 php:
-  - 5.6
+  - 7.0
 
 env:
   - VERSION=STABLE
@@ -65,6 +65,7 @@ install:
 
   # Install drush
   - composer require drush/drush:^8.0 --no-update
+  - composer require drupal/devel --no-update
 
   # Build the Lightning code base.
   - composer install
@@ -72,7 +73,7 @@ install:
   # Install Lightning.
   - cd docroot
   - drush site-install lightning --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
-  - drush pm-enable lightning_contact_form lightning_preview --yes
+  - drush pm-enable lightning_preview --yes
   - drush config-set system.logging error_level all --yes
 
   # Update codebase to head and run db updates.
@@ -81,6 +82,7 @@ install:
   - if [ $VERSION = "HEAD" ]; then composer require acquia/lightning:dev-8.x-2.x --no-update; fi;
   - if [ $VERSION = "HEAD" ]; then composer update; fi;
   - if [ $VERSION = "HEAD" ]; then cd docroot; fi;
+  - if [ $VERSION = "HEAD" ]; then drush pm-enable lightning_dev --yes; fi;
   - if [ $VERSION = "HEAD" ]; then drush updatedb -y; fi;
 
 before_script:
