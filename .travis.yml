@@ -65,6 +65,7 @@ install:
 
   # Install drush
   - composer require drush/drush:^8.0 --no-update
+  - composer require drupal/devel --no-update
 
   # Build the Lightning code base.
   - composer install
