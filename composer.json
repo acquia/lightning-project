@@ -38,8 +38,7 @@
       "post-update-cmd": [
         "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
         "Acquia\\Lightning\\ScriptHandler::deployLibraries"
-      ],
-      "prepare-behat": "Acquia\\Lightning\\ScriptHandler::prepareBehat"
+      ]
     },
     "config": {
         "bin-dir": "bin/"

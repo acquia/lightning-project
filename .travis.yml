@@ -95,11 +95,8 @@ before_script:
   - sleep 5
   - cd ..
 
-  # Prepare Behat configuration.
-  - composer run prepare-behat
-
 script:
-  - bin/behat --strict --stop-on-failure
+  - bin/behat --strict --stop-on-failure --config ./docroot/sites/default/files/behat.yml
 
 matrix:
   fast_finish: true
