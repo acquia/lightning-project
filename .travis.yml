@@ -73,7 +73,7 @@ install:
   # Install Lightning.
   - cd docroot
   - drush site-install lightning --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
-  - drush pm-enable lightning_preview --yes
+  - drush pm-enable lightning_dev lightning_preview --yes
   - drush config-set system.logging error_level all --yes
 
   # Update codebase to head and run db updates.
@@ -95,11 +95,8 @@ before_script:
   - sleep 5
   - cd ..
 
-  # Prepare Behat configuration.
-  - composer run prepare-behat
-
 script:
-  - bin/behat --strict --stop-on-failure
+  - bin/behat --strict --stop-on-failure --config ./docroot/sites/default/files/behat.yml
 
 matrix:
   fast_finish: true
