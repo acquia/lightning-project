@@ -73,7 +73,7 @@ install:
   # Install Lightning.
   - cd docroot
   - drush site-install lightning --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
-  - drush pm-enable lightning_dev lightning_preview --yes
+  - drush pm-enable lightning_preview --yes
   - drush config-set system.logging error_level all --yes
 
   # Update codebase to head and run db updates.
