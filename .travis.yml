@@ -95,10 +95,9 @@ before_script:
   - mkdir tmp
   - selenium-server-standalone -port 4444 -log tmp/selenium2.log &
   - sleep 5
-  - cd ..
 
 script:
-  - bin/behat --strict --stop-on-failure --config ./sites/default/files/behat.yml
+  - ../bin/behat --strict --stop-on-failure --config ./sites/default/files/behat.yml
 
 matrix:
   fast_finish: true
