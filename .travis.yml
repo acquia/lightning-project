@@ -73,7 +73,6 @@ install:
   # Install Lightning.
   - cd docroot
   - drush site-install lightning --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
-  - drush pm-enable lightning_preview --yes
   - drush config-set system.logging error_level all --yes
 
   # Update codebase to head and run db updates.
@@ -82,8 +81,11 @@ install:
   - if [ $VERSION = "HEAD" ]; then composer require acquia/lightning:dev-8.x-2.x --no-update; fi;
   - if [ $VERSION = "HEAD" ]; then composer update; fi;
   - if [ $VERSION = "HEAD" ]; then cd docroot; fi;
-  - if [ $VERSION = "HEAD" ]; then drush pm-enable lightning_dev --yes; fi;
   - if [ $VERSION = "HEAD" ]; then drush updatedb -y; fi;
+
+  # Enable the dev module which generates the behat config and performs any
+  # manual update steps.
+  - drush pm-enable lightning_dev --yes
 
 before_script:
   - drush runserver --default-server=builtin 8080 &>/dev/null &
@@ -93,13 +95,9 @@ before_script:
   - mkdir tmp
   - selenium-server-standalone -port 4444 -log tmp/selenium2.log &
   - sleep 5
-  - cd ..
-
-  # Prepare Behat configuration.
-  - composer run prepare-behat
 
 script:
-  - bin/behat --strict --stop-on-failure
+  - ../bin/behat --strict --stop-on-failure --config ./sites/default/files/behat.yml
 
 matrix:
   fast_finish: true
