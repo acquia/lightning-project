@@ -1,12 +1,6 @@
 This is a Composer-based installer for the [Lightning](https://www.drupal.org/project/lightning) Drupal distribution. Welcome to the future!
 
 ## Get Started
-You will need the following installed:
-
-* [Composer](https://getcomposer.org), obviously
-* [Node](https://nodejs.org), which includes the NPM package manager
-
-When you have those, run this command:
 ```
 $ composer create-project acquia/lightning-project MY_PROJECT
 ```
