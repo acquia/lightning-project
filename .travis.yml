@@ -88,8 +88,10 @@ install:
   - drush pm-enable lightning_dev --yes
 
   # Generate the behat config.
+  - cd ../
   - ./bin/drupal behat:init http://127.0.0.1:8080 --merge=../docroot/profiles/contrib/lightning/tests/behat.yml
   - ./bin/drupal behat:include ../docroot/profiles/contrib/lightning/tests/features --with-subcontexts=../docroot/profiles/contrib/lightning/tests/features/bootstrap --with-subcontexts=../docroot/profiles/contrib/lightning/src/LightningExtension/Context
+  - cd ./docroot
 
 before_script:
   - drush runserver --default-server=builtin 8080 &>/dev/null &
