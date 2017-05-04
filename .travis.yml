@@ -13,9 +13,9 @@ php:
   - 7.0
 
 env:
-  - VERSION=STABLE PROFILE=lightning
-  - VERSION=HEAD PROFILE=lightning
-  - VERSION=SUBPROFILE PROFILE=subprofile
+  - VERSION=STABLE TEST_TAGS=lightning
+  - VERSION=HEAD TEST_TAGS=lightning
+  - VERSION=SUBPROFILE TEST_TAGS=~search
 
 addons:
   apt:
@@ -118,7 +118,7 @@ before_script:
   - sleep 5
 
 script:
-  - ../bin/behat --strict --stop-on-failure --config ./sites/default/files/behat.yml --tags=${PROFILE}
+  - ../bin/behat --strict --stop-on-failure --config ./sites/default/files/behat.yml --tags=${TEST_TAGS}
 
 matrix:
   fast_finish: true
