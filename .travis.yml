@@ -76,23 +76,27 @@ install:
   - drush config-set system.logging error_level all --yes
 
   # Create custom sub-profile and install it.
-  - if [ $VERSION = "SUBPROFILE" ]; then cd ..; fi;
-  - if [ $VERSION = "SUBPROFILE" ]; then composer require drupal/paragraphs; fi;
-  - if [ $VERSION = "SUBPROFILE" ]; then ./bin/drupal lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --include=paragraphs --exclude=lightning_search ; fi;
-  - if [ $VERSION = "SUBPROFILE" ]; then mkdir -p ./tests/features; fi;
-  - if [ $VERSION = "SUBPROFILE" ]; then curl -o tests/features/subprofile.feature  https://gist.githubusercontent.com/balsama/c8c03bb21f7a91a1a87d01ef185a3955/raw/6b4d6bea05dade17c89064416217df6f72194f24/subprofile.feature; fi;
-  - if [ $VERSION = "SUBPROFILE" ]; then mkdir -p ./tests/features; fi;
-  - if [ $VERSION = "SUBPROFILE" ]; then chmod +w ./docroot/sites/default/settings.php; fi;
-  - if [ $VERSION = "SUBPROFILE" ]; then cd docroot; fi;
-  - if [ $VERSION = "SUBPROFILE" ]; then drush site-install subprofile --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal; fi;
+  - 'if [ $VERSION = "SUBPROFILE" ]; then
+      cd ..;
+      composer require drupal/paragraphs;
+      ./bin/drupal lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --include=paragraphs --exclude=lightning_search;
+      mkdir -p ./tests/features;
+      curl -o tests/features/subprofile.feature  https://gist.githubusercontent.com/balsama/c8c03bb21f7a91a1a87d01ef185a3955/raw/3c8a85a217d97c7cc45025c20def3e904ce646dc/subprofile.feature;
+      mkdir -p ./tests/features;
+      chmod +w ./docroot/sites/default/settings.php;
+      cd docroot;
+      drush site-install subprofile --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal;
+    fi;'
 
   # Update codebase to head and run db updates.
-  - if [ $VERSION = "HEAD" ]; then cd ..; fi;
-  - if [ $VERSION = "HEAD" ]; then rm -rf docroot/modules/contrib && rm -rf docroot/profiles/contrib/lightning && rm -rf vendor && rm composer.lock; fi;
-  - if [ $VERSION = "HEAD" ]; then composer require acquia/lightning:dev-8.x-2.x --no-update; fi;
-  - if [ $VERSION = "HEAD" ]; then composer update; fi;
-  - if [ $VERSION = "HEAD" ]; then cd docroot; fi;
-  - if [ $VERSION = "HEAD" ]; then drush updatedb -y; fi;
+  - 'if [ $VERSION = "HEAD" ]; then
+      cd ..;
+      rm -rf docroot/modules/contrib && rm -rf docroot/profiles/contrib/lightning && rm -rf vendor && rm composer.lock;
+      composer require acquia/lightning:dev-8.x-2.x --no-update;
+      composer update;
+      cd docroot;
+      drush updatedb -y;
+    fi;'
 
   # Enable the dev module which generates the behat config and performs any
   # manual update steps.
