@@ -64,7 +64,6 @@ install:
   - phpenv rehash
 
   # Install drush
-  - composer require drush/drush:^8.0 --no-update
   - composer require drupal/devel --no-update
 
   # Build the Lightning code base.
@@ -77,7 +76,7 @@ install:
 
   # Update codebase to head and run db updates.
   - if [ $VERSION = "HEAD" ]; then cd ..; fi;
-  - if [ $VERSION = "HEAD" ]; then rm -rf docroot/modules/contrib; fi;
+  - if [ $VERSION = "HEAD" ]; then rm -rf docroot/modules/contrib && rm -rf docroot/profiles/contrib/lightning && rm -rf vendor && rm composer.lock; fi;
   - if [ $VERSION = "HEAD" ]; then composer require acquia/lightning:dev-8.x-2.x --no-update; fi;
   - if [ $VERSION = "HEAD" ]; then composer update; fi;
   - if [ $VERSION = "HEAD" ]; then cd docroot; fi;
@@ -86,6 +85,12 @@ install:
   # Enable the dev module which generates the behat config and performs any
   # manual update steps.
   - drush pm-enable lightning_dev --yes
+
+  # Generate the behat config.
+  - cd ../
+  - ./bin/drupal behat:init http://127.0.0.1:8080 --merge=../docroot/profiles/contrib/lightning/tests/behat.yml
+  - ./bin/drupal behat:include ../docroot/profiles/contrib/lightning/tests/features --with-subcontexts=../docroot/profiles/contrib/lightning/tests/features/bootstrap --with-subcontexts=../docroot/profiles/contrib/lightning/src/LightningExtension/Context
+  - cd ./docroot
 
 before_script:
   - drush runserver --default-server=builtin 8080 &>/dev/null &
