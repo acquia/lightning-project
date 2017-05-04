@@ -75,7 +75,7 @@ install:
   - drush site-install lightning --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
   - drush config-set system.logging error_level all --yes
 
-  # Create custom subprofile and install it.
+  # Create custom sub-profile and install it.
   - if [ $VERSION = "SUBPROFILE" ]; then cd ..; fi;
   - if [ $VERSION = "SUBPROFILE" ]; then composer require drupal/paragraphs; fi;
   - if [ $VERSION = "SUBPROFILE" ]; then ./bin/drupal lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --include=paragraphs --exclude=lightning_layout ; fi;
@@ -102,6 +102,7 @@ install:
   - cd ../
   - ./bin/drupal behat:init http://127.0.0.1:8080 --merge=../docroot/profiles/contrib/lightning/tests/behat.yml
   - ./bin/drupal behat:include ../docroot/profiles/contrib/lightning/tests/features --with-subcontexts=../docroot/profiles/contrib/lightning/tests/features/bootstrap --with-subcontexts=../docroot/profiles/contrib/lightning/src/LightningExtension/Context
+  - if [ $VERSION = "SUBPROFILE" ]; then ./bin/drupal behat:include ../tests/features; fi;
   - cd ./docroot
 
 before_script:
