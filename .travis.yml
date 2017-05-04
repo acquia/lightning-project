@@ -64,7 +64,7 @@ install:
   - phpenv config-add drupal.php.ini
   - phpenv rehash
 
-  # Install drush
+  # Add Devel, which is a dependency of Lightning Dev, to the codebase
   - composer require drupal/devel --no-update
 
   # Build the Lightning code base.
@@ -75,7 +75,7 @@ install:
   - drush site-install lightning --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
   - drush config-set system.logging error_level all --yes
 
-  # Create custom sub-profile and install it.
+  # Create custom sub-profile, install it, and download custom tests.
   - 'if [ $VERSION = "SUBPROFILE" ]; then
       cd ..;
       composer require drupal/paragraphs;
@@ -98,8 +98,7 @@ install:
       drush updatedb -y;
     fi;'
 
-  # Enable the dev module which generates the behat config and performs any
-  # manual update steps.
+  # Enable the dev module which performs any manual update steps.
   - drush pm-enable lightning_dev --yes
 
   # Generate the behat config.
