@@ -13,9 +13,9 @@ php:
   - 7.0
 
 env:
-  - VERSION=STABLE PROFILE=lightning
-  - VERSION=HEAD PROFILE=lightning
-  - VERSION=SUBPROFILE PROFILE=subprofile
+  - VERSION=STABLE TEST_TAGS=lightning
+  - VERSION=HEAD TEST_TAGS=lightning
+  - VERSION=SUBPROFILE TEST_TAGS=~search
 
 addons:
   apt:
