@@ -81,7 +81,7 @@ install:
       composer require drupal/paragraphs;
       ./bin/drupal lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --include=paragraphs --exclude=lightning_search;
       mkdir -p ./tests/features;
-      curl -o tests/features/subprofile.feature  https://gist.githubusercontent.com/balsama/c8c03bb21f7a91a1a87d01ef185a3955/raw/3c8a85a217d97c7cc45025c20def3e904ce646dc/subprofile.feature;
+      curl -o tests/features/subprofile.feature  https://gist.githubusercontent.com/balsama/c8c03bb21f7a91a1a87d01ef185a3955/raw;
       mkdir -p ./tests/features;
       chmod +w ./docroot/sites/default/settings.php;
       cd docroot;
