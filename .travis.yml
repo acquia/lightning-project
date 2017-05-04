@@ -13,8 +13,9 @@ php:
   - 7.0
 
 env:
-  - VERSION=STABLE
-  - VERSION=HEAD
+  - VERSION=STABLE PROFILE=lightning
+  - VERSION=HEAD PROFILE=lightning
+  - VERSION=SUBPROFILE PROFILE=subprofile
 
 addons:
   apt:
@@ -74,13 +75,28 @@ install:
   - drush site-install lightning --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
   - drush config-set system.logging error_level all --yes
 
+  # Create custom sub-profile and install it.
+  - 'if [ $VERSION = "SUBPROFILE" ]; then
+      cd ..;
+      composer require drupal/paragraphs;
+      ./bin/drupal lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --include=paragraphs --exclude=lightning_search;
+      mkdir -p ./tests/features;
+      curl -o tests/features/subprofile.feature  https://gist.githubusercontent.com/balsama/c8c03bb21f7a91a1a87d01ef185a3955/raw;
+      mkdir -p ./tests/features;
+      chmod +w ./docroot/sites/default/settings.php;
+      cd docroot;
+      drush site-install subprofile --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal;
+    fi;'
+
   # Update codebase to head and run db updates.
-  - if [ $VERSION = "HEAD" ]; then cd ..; fi;
-  - if [ $VERSION = "HEAD" ]; then rm -rf docroot/modules/contrib && rm -rf docroot/profiles/contrib/lightning && rm -rf vendor && rm composer.lock; fi;
-  - if [ $VERSION = "HEAD" ]; then composer require acquia/lightning:dev-8.x-2.x --no-update; fi;
-  - if [ $VERSION = "HEAD" ]; then composer update; fi;
-  - if [ $VERSION = "HEAD" ]; then cd docroot; fi;
-  - if [ $VERSION = "HEAD" ]; then drush updatedb -y; fi;
+  - 'if [ $VERSION = "HEAD" ]; then
+      cd ..;
+      rm -rf docroot/modules/contrib && rm -rf docroot/profiles/contrib/lightning && rm -rf vendor && rm composer.lock;
+      composer require acquia/lightning:dev-8.x-2.x --no-update;
+      composer update;
+      cd docroot;
+      drush updatedb -y;
+    fi;'
 
   # Enable the dev module which generates the behat config and performs any
   # manual update steps.
@@ -90,6 +106,7 @@ install:
   - cd ../
   - ./bin/drupal behat:init http://127.0.0.1:8080 --merge=../docroot/profiles/contrib/lightning/tests/behat.yml
   - ./bin/drupal behat:include ../docroot/profiles/contrib/lightning/tests/features --with-subcontexts=../docroot/profiles/contrib/lightning/tests/features/bootstrap --with-subcontexts=../docroot/profiles/contrib/lightning/src/LightningExtension/Context
+  - if [ $VERSION = "SUBPROFILE" ]; then ./bin/drupal behat:include ../tests/features; fi;
   - cd ./docroot
 
 before_script:
@@ -102,7 +119,7 @@ before_script:
   - sleep 5
 
 script:
-  - ../bin/behat --strict --stop-on-failure --config ./sites/default/files/behat.yml
+  - ../bin/behat --strict --stop-on-failure --config ./sites/default/files/behat.yml --tags=${PROFILE}
 
 matrix:
   fast_finish: true
