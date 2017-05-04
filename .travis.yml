@@ -83,8 +83,8 @@ install:
   - if [ $VERSION = "SUBPROFILE" ]; then curl -o tests/features/subprofile.feature  https://gist.githubusercontent.com/balsama/c8c03bb21f7a91a1a87d01ef185a3955/raw/6b4d6bea05dade17c89064416217df6f72194f24/subprofile.feature; fi;
   - if [ $VERSION = "SUBPROFILE" ]; then mkdir -p ./tests/features; fi;
   - if [ $VERSION = "SUBPROFILE" ]; then chmod +w ./docroot/sites/default/settings.php; fi;
-  - if [ $VERSION = "SUBPROFILE" ]; then drush site-install subprofile --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal; fi;
   - if [ $VERSION = "SUBPROFILE" ]; then cd docroot; fi;
+  - if [ $VERSION = "SUBPROFILE" ]; then drush site-install subprofile --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal; fi;
 
   # Update codebase to head and run db updates.
   - if [ $VERSION = "HEAD" ]; then cd ..; fi;
