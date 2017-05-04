@@ -71,7 +71,7 @@ install:
   - composer install
 
   # Install Lightning.
-  - if [ $VERSION = "SUBPROFILE" ]; then lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --exclude=lightning_layout ; fi;
+  - if [ $VERSION = "SUBPROFILE" ]; then ./bin/drupal lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --exclude=lightning_layout ; fi;
   - cd docroot
   - drush site-install ${PROFILE} --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
   - drush config-set system.logging error_level all --yes
