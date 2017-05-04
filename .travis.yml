@@ -13,8 +13,9 @@ php:
   - 7.0
 
 env:
-  - VERSION=STABLE
-  - VERSION=HEAD
+  - VERSION=STABLE PROFILE=lightning
+  - VERSION=HEAD PROFILE=lightning
+  - VERSION=SUBPROFILE PROFILE=subprofile
 
 addons:
   apt:
@@ -70,8 +71,9 @@ install:
   - composer install
 
   # Install Lightning.
+  - if [ $VERSION = "SUBPROFILE" ]; then lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --exclude=lightning_layout ; fi;
   - cd docroot
-  - drush site-install lightning --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
+  - drush site-install ${PROFILE} --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
   - drush config-set system.logging error_level all --yes
 
   # Update codebase to head and run db updates.
@@ -102,7 +104,7 @@ before_script:
   - sleep 5
 
 script:
-  - ../bin/behat --strict --stop-on-failure --config ./sites/default/files/behat.yml
+  - ../bin/behat --strict --stop-on-failure --config ./sites/default/files/behat.yml --tags=${PROFILE}
 
 matrix:
   fast_finish: true
