@@ -75,6 +75,10 @@ install:
   - drush site-install lightning --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
   - drush config-set system.logging error_level all --yes
 
+  # Enable the dev module which will perform any manual update steps needed
+  # during drush updatedb.
+  - drush pm-enable lightning_dev --yes
+
   # Create custom sub-profile, install it, and download custom tests.
   - 'if [ $VERSION = "SUBPROFILE" ]; then
       cd ..;
@@ -97,10 +101,6 @@ install:
       cd docroot;
       drush updatedb -y;
     fi;'
-
-  # Enable the dev module and run any database updates contained in it.
-  - drush pm-enable lightning_dev --yes
-  - drush updatedb -y
 
   # Generate the behat config.
   - cd ../
