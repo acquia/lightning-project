@@ -98,8 +98,9 @@ install:
       drush updatedb -y;
     fi;'
 
-  # Enable the dev module which performs any manual update steps.
+  # Enable the dev module and run any database updates contained in it.
   - drush pm-enable lightning_dev --yes
+  - drush updatedb -y
 
   # Generate the behat config.
   - cd ../
