@@ -1,8 +1,8 @@
-This is a Composer-based installer for the [Lightning](https://www.drupal.org/project/lightning) Drupal distribution. Welcome to the future!
+This is a Composer-based installer for the [Headless Lightning](https://github.com/acquia/headless-lightning) Drupal distribution. Welcome to the future!
 
 ## Get Started
 ```
-$ composer create-project acquia/lightning-project MY_PROJECT
+$ composer create-project acquia/lightning-project:dev-headless --no-interaction MY_PROJECT
 ```
 Composer will create a new directory called MY_PROJECT containing a ```docroot``` directory with a full Lightning code base therein. You can then install it like you would any other Drupal site.
 

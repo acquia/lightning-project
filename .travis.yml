@@ -13,9 +13,8 @@ php:
   - 7.0
 
 env:
-  - VERSION=STABLE TEST_TAGS=lightning
-  - VERSION=HEAD TEST_TAGS=lightning
-  - VERSION=SUBPROFILE TEST_TAGS=~search
+  - VERSION=STABLE TEST_TAGS=headless
+  - VERSION=HEAD TEST_TAGS=headless
 
 addons:
   apt:
@@ -72,31 +71,18 @@ install:
 
   # Install Lightning.
   - cd $TRAVIS_BUILD_DIR/docroot
-  - drush site-install lightning --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
+  - drush site-install headless_lightning --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
   - drush config-set system.logging error_level all --yes
 
   # Enable the dev module which will perform any manual update steps needed
   # during drush updatedb.
   - drush pm-enable lightning_dev --yes
 
-  # Create custom sub-profile, install it, and download custom tests.
-  - 'if [ $VERSION = "SUBPROFILE" ]; then
-      cd $TRAVIS_BUILD_DIR;
-      composer require drupal/paragraphs;
-      drupal lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --include=paragraphs --exclude=lightning_search;
-      mkdir -p ./tests/features;
-      curl -o tests/features/subprofile.feature  https://gist.githubusercontent.com/balsama/c8c03bb21f7a91a1a87d01ef185a3955/raw;
-      mkdir -p ./tests/features;
-      chmod +w ./docroot/sites/default/settings.php;
-      cd docroot;
-      drush site-install subprofile --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal;
-    fi;'
-
   # Update codebase to head and run db updates.
   - 'if [ $VERSION = "HEAD" ]; then
       cd $TRAVIS_BUILD_DIR;
       rm -rf docroot/modules/contrib && rm -rf docroot/profiles/contrib/lightning && rm -rf vendor && rm composer.lock;
-      composer require acquia/lightning:dev-8.x-2.x --no-update;
+      composer require acquia/headless_lightning:dev-master --no-update;
       composer update;
       drupal update:execute;
     fi;'
@@ -104,8 +90,7 @@ install:
   # Generate the behat config.
   - cd $TRAVIS_BUILD_DIR
   - ./bin/drupal behat:init http://127.0.0.1:8080 --merge=../docroot/profiles/contrib/lightning/tests/behat.yml
-  - ./bin/drupal behat:include ../docroot/profiles/contrib/lightning/tests/features --with-subcontexts=../docroot/profiles/contrib/lightning/tests/features/bootstrap --with-subcontexts=../docroot/profiles/contrib/lightning/src/LightningExtension/Context
-  - if [ $VERSION = "SUBPROFILE" ]; then ./bin/drupal behat:include ../tests/features; fi;
+  - ./bin/drupal behat:include ../docroot/profiles/contrib/headless_lightning/tests/behat/features
   - cd $TRAVIS_BUILD_DIR/docroot
 
 before_script:
