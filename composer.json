@@ -23,7 +23,7 @@
     "require": {
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "cweagans/composer-patches": "^1.6.0",
-        "acquia/lightning": "dev-8.x-2.x",
+        "acquia/lightning": "dev-bulk-upload",
         "oomphinc/composer-installers-extender": "^1.1"
     },
     "repositories": [
@@ -34,6 +34,10 @@
         {
             "type": "composer",
             "url": "https://asset-packagist.org"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/phenaproxima/lightning.git"
         }
     ],
     "scripts": {
@@ -48,6 +52,10 @@
         "bin-dir": "bin/"
     },
     "extra": {
+        "installer-types": [
+            "bower-asset",
+            "npm-asset"
+        ],
         "installer-paths": {
             "docroot/core": [
                 "type:drupal-core"
