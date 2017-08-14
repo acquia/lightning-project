@@ -90,6 +90,7 @@ install:
       chmod +w ./docroot/sites/default/settings.php;
       cd docroot;
       drush site-install subprofile --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal;
+      drush config-set lightning_api.settings entity_json 1 --format=boolean --yes;
     fi;'
 
   # Update codebase to head and run db updates.
