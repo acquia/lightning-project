@@ -23,7 +23,7 @@
     "require": {
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "cweagans/composer-patches": "^1.6.0",
-        "acquia/lightning": "~2.1.0",
+        "acquia/lightning": "dev-bulk-upload",
         "oomphinc/composer-installers-extender": "^1.1"
     },
     "repositories": [
