@@ -90,6 +90,7 @@ install:
   # Generate the behat config.
   - cd $TRAVIS_BUILD_DIR
   - ./bin/drupal behat:init http://127.0.0.1:8080 --merge=../docroot/profiles/contrib/lightning/tests/behat.yml
+  - ./bin/drupal behat:include ../docroot/profiles/contrib/lightning/tests/features --with-subcontexts=../docroot/profiles/contrib/lightning/tests/features/bootstrap --with-subcontexts=../docroot/profiles/contrib/lightning/src/LightningExtension/Context
   - ./bin/drupal behat:include ../docroot/profiles/contrib/headless_lightning/tests/behat/features
   - cd $TRAVIS_BUILD_DIR/docroot
 
