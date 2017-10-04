@@ -17,13 +17,14 @@
         "behat/behat": "^3.0",
         "se/selenium-server-standalone": "^2.53",
         "composer/composer": "^1.3",
-        "drush/drush": "8.1.11",
+        "drush/drush": "^9.0",
         "drupal/console": "1.0.1"
     },
     "require": {
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "cweagans/composer-patches": "^1.6.0",
-        "acquia/headless_lightning": "~1.0.0"
+        "acquia/headless_lightning": "~1.1.0",
+        "drupal/core": "~8.4.0"
     },
     "repositories": [
         {
