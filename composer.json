@@ -24,7 +24,8 @@
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "cweagans/composer-patches": "^1.6.0",
         "acquia/lightning": "2.2.0",
-        "drupal/core": "~8.4.0"
+        "drupal/core": "~8.4.0",
+        "drupal/media_entity_generic": "^1.0"
     },
     "repositories": [
         {
