@@ -29,7 +29,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/acquia/lightning.git"
+            "url": "git@github.com:acquia/lightning.git"
         },
         {
             "type": "composer",
