@@ -101,7 +101,9 @@ install:
       composer update;
       cd $TRAVIS_BUILD_DIR/docroot;
       ../bin/drush cr;
-      ../bin/drush updb -y;
+      ../bin/drush updatedb --yes;
+      cd $TRAVIS_BUILD_DIR;
+      drupal lightning:update --no-interaction;
     fi;'
 
   # Generate the behat config.
