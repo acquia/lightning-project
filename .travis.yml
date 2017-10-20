@@ -99,7 +99,7 @@ install:
       rm -rf docroot/modules/contrib && rm -rf docroot/profiles/contrib/lightning && rm -rf vendor && rm composer.lock;
       composer require acquia/lightning:dev-core-media --no-update;
       composer update;
-      cd docroot ../bin/drush updb -y;
+      cd $TRAVIS_BUILD_DIR/docroot ../bin/drush updb -y;
     fi;'
 
   # Generate the behat config.
