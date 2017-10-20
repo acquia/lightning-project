@@ -103,7 +103,7 @@ install:
       ../bin/drush cr;
       ../bin/drush updatedb --yes;
       cd $TRAVIS_BUILD_DIR;
-      drupal lightning:update --no-interaction;
+      drupal update:lightning --no-interaction;
     fi;'
 
   # Generate the behat config.
