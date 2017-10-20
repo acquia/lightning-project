@@ -29,7 +29,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/acquia/lightning",
+            "url": "https://github.com/balsama/lightning",
             "no-api": true
         },
         {
