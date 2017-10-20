@@ -97,9 +97,9 @@ install:
   - 'if [ $VERSION = "HEAD" ]; then
       cd $TRAVIS_BUILD_DIR;
       rm -rf docroot/modules/contrib && rm -rf docroot/profiles/contrib/lightning && rm -rf vendor && rm composer.lock;
-      composer require acquia/lightning:dev-8.x-2.x --no-update;
+      composer require acquia/lightning:dev-core-media --no-update;
       composer update;
-      drupal update:execute;
+      cd docroot ../bin/drush updb -y;
     fi;'
 
   # Generate the behat config.

@@ -28,6 +28,10 @@
     },
     "repositories": [
         {
+            "type": "vcs",
+            "url": "https://github.com/acquia/lightning"
+        },
+        {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         },
