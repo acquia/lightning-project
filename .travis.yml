@@ -68,7 +68,7 @@ install:
   - composer require drupal/devel --no-update
 
   # Build the Lightning code base.
-  - composer update
+  - composer install
 
   # Install Lightning.
   - cd $TRAVIS_BUILD_DIR/docroot
