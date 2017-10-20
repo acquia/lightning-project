@@ -29,7 +29,8 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/acquia/lightning"
+            "url": "https://github.com/acquia/lightning",
+            "no-api": true
         },
         {
             "type": "composer",
