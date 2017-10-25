@@ -97,7 +97,7 @@ install:
   - 'if [ $VERSION = "HEAD" ]; then
       cd $TRAVIS_BUILD_DIR;
       rm -rf docroot/modules/contrib && rm -rf docroot/profiles/contrib/lightning && rm -rf vendor && rm composer.lock;
-      composer require acquia/lightning:2.2.1-alpha2 --no-update;
+      composer require acquia/lightning:dev-8.x-2.x --no-update;
       composer update;
       cd $TRAVIS_BUILD_DIR/docroot;
       ../bin/drush cr;
