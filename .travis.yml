@@ -99,6 +99,7 @@ install:
       rm -rf docroot/modules/contrib && rm -rf docroot/profiles/contrib/lightning && rm -rf vendor && rm composer.lock;
       composer require acquia/lightning:dev-8.x-2.x --no-update;
       composer update;
+      drupal cache:rebuild all;
       drupal update:execute;
       drupal update:lightning --no-interaction;
     fi;'
