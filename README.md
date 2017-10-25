@@ -13,8 +13,9 @@ Let this handy table be your guide:
 
 | Task                                            | Drush                                         | Composer                                          |
 |-------------------------------------------------|-----------------------------------------------|---------------------------------------------------|
-| Installing a contrib project (latest version)   | ```drush pm-download PROJECT```               | ```composer require drupal/PROJECT```         |
+| Installing a contrib project (latest version)   | ```drush pm-download PROJECT```               | ```composer require drupal/PROJECT```             |
 | Installing a contrib project (specific version) | ```drush pm-download PROJECT-8.x-1.0-beta3``` | ```composer require drupal/PROJECT:1.0.0-beta3``` |
+| Installing a javascript library (e.g. dropzone) | ```drush pm-download dropzone```              | ```composer require bower-asset/dropzone```       |
 | Updating all contrib projects and Drupal core   | ```drush pm-update```                         | ```composer update```                             |
 | Updating a single contrib project               | ```drush pm-update PROJECT```                 | ```composer update drupal/PROJECT```              |
 | Updating Drupal core                            | ```drush pm-update drupal```                  | ```composer update drupal/core```                 |
