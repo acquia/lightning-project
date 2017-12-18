@@ -89,7 +89,6 @@ install:
   - composer update
   - drupal cache:rebuild all
   - drupal update:execute
-  - PREV_VERSION="$(./vendor/bin/drupal lightning:version)"
   - drupal update:lightning $UPDATE_FROM --no-interaction
 
   # Create custom sub-profile, install it, and download custom tests.
