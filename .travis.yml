@@ -69,10 +69,12 @@ install:
   # Build the Lightning code base.
   - composer install
 
-  # Create custom sub-profile and download custom tests.
+  # Create custom sub-profile and download custom tests. We need Lightning to be
+  # installed foe the sub-profile command to run. But we will reinstall later
+  # and run the update.
   - 'if [ $VERSION = "SUBPROFILE" ]; then
       cd $TRAVIS_BUILD_DIR/docroot;
-      drush site-install $PROFILE_NAME --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal;
+      drush site-install lightning --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal;
       cd $TRAVIS_BUILD_DIR;
       composer require drupal/paragraphs;
       drupal lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --include=paragraphs --exclude=lightning_search;
