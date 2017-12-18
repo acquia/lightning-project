@@ -13,12 +13,8 @@ php:
   - 7.0
 
 env:
-  global:
-    - UPDATE_FROM=2.2.5 # @todo Switch to the following after Lightning 2.2.6:
-      # "$(drupal lightning:version)"
-  matrix:
-    - VERSION=LIGHTNING TEST_TAGS=lightning
-    - VERSION=SUBPROFILE TEST_TAGS=~search
+  - VERSION=LIGHTNING TEST_TAGS=lightning
+  - VERSION=SUBPROFILE TEST_TAGS=~search
 
 addons:
   apt:
@@ -79,8 +75,12 @@ install:
   - drush config-set system.logging error_level all --yes
 
   # Enable the dev module which will perform any manual update steps needed
-  # during drush updatedb.
+  # during database updates.
   - drush pm-enable lightning_dev --yes
+
+  # Record the version of Lightning for the Configuration Updates.
+  - UPDATE_FROM=2.2.5 # @todo Switch to the following for the value of
+    # UPDATE_FROM after Lightning 2.2.6: "$(drupal lightning:version)"
 
   # Update codebase to head and run db updates.
   - cd $TRAVIS_BUILD_DIR
