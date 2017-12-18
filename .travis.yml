@@ -13,8 +13,8 @@ php:
   - 7.0
 
 env:
-  - VERSION=LIGHTNING TEST_TAGS=lightning
-  - VERSION=SUBPROFILE TEST_TAGS=~search
+  - VERSION=LIGHTNING TEST_TAGS=lightning PROFILE_NAME=lightning
+  - VERSION=SUBPROFILE TEST_TAGS=~search PROFILE_NAME=subprofile
 
 addons:
   apt:
@@ -69,9 +69,19 @@ install:
   # Build the Lightning code base.
   - composer install
 
+  # Create custom sub-profile and download custom tests.
+    - 'if [ $VERSION = "SUBPROFILE" ]; then
+        cd $TRAVIS_BUILD_DIR;
+        composer require drupal/paragraphs;
+        drupal lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --include=paragraphs --exclude=lightning_search;
+        mkdir -p ./tests/features;
+        curl -o tests/features/subprofile.feature  https://gist.githubusercontent.com/balsama/c8c03bb21f7a91a1a87d01ef185a3955/raw;
+        chmod +w ./docroot/sites/default/settings.php;
+      fi;'
+
   # Install Lightning.
   - cd $TRAVIS_BUILD_DIR/docroot
-  - drush site-install lightning --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
+  - drush site-install $PROFILE_NAME --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
   - drush config-set system.logging error_level all --yes
 
   # Enable the dev module which will perform any manual update steps needed
@@ -88,21 +98,8 @@ install:
   - composer require acquia/lightning:dev-8.x-2.x --no-update
   - composer update
   - drupal cache:rebuild all
-  - drupal update:execute
+  - drush updatedb --yes
   - drupal update:lightning $UPDATE_FROM --no-interaction
-
-  # Create custom sub-profile, install it, and download custom tests.
-  - 'if [ $VERSION = "SUBPROFILE" ]; then
-      cd $TRAVIS_BUILD_DIR;
-      composer require drupal/paragraphs;
-      drupal lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --include=paragraphs --exclude=lightning_search;
-      mkdir -p ./tests/features;
-      curl -o tests/features/subprofile.feature  https://gist.githubusercontent.com/balsama/c8c03bb21f7a91a1a87d01ef185a3955/raw;
-      chmod +w ./docroot/sites/default/settings.php;
-      cd docroot;
-      drush site-install subprofile --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal;
-      drush config-set lightning_api.settings entity_json true --yes;
-    fi;'
 
   # Generate the behat config.
   - cd $TRAVIS_BUILD_DIR
