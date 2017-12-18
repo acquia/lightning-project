@@ -17,7 +17,7 @@ env:
     - UPDATE_FROM=2.2.5 # @todo Switch to the following after Lightning 2.2.6:
       # "$(drupal lightning:version)"
   matrix:
-    - VERSION=HEAD_UPDATE TEST_TAGS=lightning
+    - VERSION=LIGHTNING TEST_TAGS=lightning
     - VERSION=SUBPROFILE TEST_TAGS=~search
 
 addons:
