@@ -104,7 +104,7 @@ before_script:
   - sleep 5
 
 script:
-  - behat --strict --stop-on-failure --config ./sites/default/files/behat.yml --tags=${TEST_TAGS}
+  - behat --strict --stop-on-failure --config ./sites/default/files/behat.yml --tags=headless
 
 matrix:
   fast_finish: true
