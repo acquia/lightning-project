@@ -70,14 +70,14 @@ install:
   - composer install
 
   # Create custom sub-profile and download custom tests.
-    - 'if [ $VERSION = "SUBPROFILE" ]; then
-        cd $TRAVIS_BUILD_DIR;
-        composer require drupal/paragraphs;
-        drupal lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --include=paragraphs --exclude=lightning_search;
-        mkdir -p ./tests/features;
-        curl -o tests/features/subprofile.feature  https://gist.githubusercontent.com/balsama/c8c03bb21f7a91a1a87d01ef185a3955/raw;
-        chmod +w ./docroot/sites/default/settings.php;
-      fi;'
+  - 'if [ $VERSION = "SUBPROFILE" ]; then
+      cd $TRAVIS_BUILD_DIR;
+      composer require drupal/paragraphs;
+      drupal lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --include=paragraphs --exclude=lightning_search;
+      mkdir -p ./tests/features;
+      curl -o tests/features/subprofile.feature  https://gist.githubusercontent.com/balsama/c8c03bb21f7a91a1a87d01ef185a3955/raw;
+      chmod +w ./docroot/sites/default/settings.php;
+    fi;'
 
   # Install Lightning.
   - cd $TRAVIS_BUILD_DIR/docroot
