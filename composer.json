@@ -43,7 +43,8 @@
       ],
       "post-update-cmd": [
         "DrupalComposer\\DrupalScaffold\\Plugin::scaffold"
-      ]
+      ],
+      "nuke": "rm -rf docroot/modules/contrib && rm -rf docroot/profiles/contrib/lightning && rm -rf vendor && rm composer.lock"
     },
     "config": {
         "bin-dir": "bin/"
