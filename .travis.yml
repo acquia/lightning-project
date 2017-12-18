@@ -52,7 +52,7 @@ before_install:
 install:
   # Add Composer's local bin directory to the PATH so that we will be running
   # our installed versions of Drush, PHPCS, Behat, PhantomJS, etc.
-  - export PATH="$HOME/.composer/vendor/bin:$TRAVIS_BUILD_DIR/bin:$PATH"
+  - export PATH="$HOME/.composer/vendor/bin:$TRAVIS_BUILD_DIR/vendor/bin:$PATH"
 
   # Create the MySQL database and add a user for testing.
   - mysql -u root -e "CREATE DATABASE drupal; CREATE USER 'lightning'@'localhost' IDENTIFIED BY 'lightning'; GRANT ALL ON drupal.* TO 'lightning'@'localhost';"
@@ -107,9 +107,9 @@ install:
 
   # Generate the behat config.
   - cd $TRAVIS_BUILD_DIR
-  - ./bin/drupal behat:init http://127.0.0.1:8080 --merge=../docroot/profiles/contrib/lightning/tests/behat.yml
-  - ./bin/drupal behat:include ../docroot/profiles/contrib/lightning/tests/features --with-subcontexts=../docroot/profiles/contrib/lightning/tests/features/bootstrap --with-subcontexts=../docroot/profiles/contrib/lightning/src/LightningExtension/Context
-  - if [ $VERSION = "SUBPROFILE" ]; then ./bin/drupal behat:include ../tests/features; fi;
+  - drupal behat:init http://127.0.0.1:8080 --merge=../docroot/profiles/contrib/lightning/tests/behat.yml
+  - drupal behat:include ../docroot/profiles/contrib/lightning/tests/features --with-subcontexts=../docroot/profiles/contrib/lightning/tests/features/bootstrap --with-subcontexts=../docroot/profiles/contrib/lightning/src/LightningExtension/Context
+  - if [ $VERSION = "SUBPROFILE" ]; then drupal behat:include ../tests/features; fi;
   - cd $TRAVIS_BUILD_DIR/docroot
 
 before_script:
@@ -122,7 +122,7 @@ before_script:
   - sleep 5
 
 script:
-  - ../bin/behat --strict --stop-on-failure --config ./sites/default/files/behat.yml --tags=${TEST_TAGS}
+  - behat --strict --stop-on-failure --config ./sites/default/files/behat.yml --tags=${TEST_TAGS}
 
 matrix:
   fast_finish: true
