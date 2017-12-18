@@ -13,9 +13,12 @@ php:
   - 7.0
 
 env:
-  - VERSION=STABLE TEST_TAGS=lightning
-  - VERSION=HEAD TEST_TAGS=lightning
-  - VERSION=SUBPROFILE TEST_TAGS=~search
+  global:
+    - UPDATE_FROM=2.2.5 # @todo Switch to the following after Lightning 2.2.6:
+      # "$(drupal lightning:version)"
+  matrix:
+    - VERSION=HEAD_UPDATE TEST_TAGS=lightning
+    - VERSION=SUBPROFILE TEST_TAGS=~search
 
 addons:
   apt:
@@ -79,6 +82,16 @@ install:
   # during drush updatedb.
   - drush pm-enable lightning_dev --yes
 
+  # Update codebase to head and run db updates.
+  - cd $TRAVIS_BUILD_DIR
+  - composer nuke
+  - composer require acquia/lightning:dev-8.x-2.x --no-update
+  - composer update
+  - drupal cache:rebuild all
+  - drupal update:execute
+  - PREV_VERSION="$(./vendor/bin/drupal lightning:version)"
+  - drupal update:lightning $UPDATE_FROM --no-interaction
+
   # Create custom sub-profile, install it, and download custom tests.
   - 'if [ $VERSION = "SUBPROFILE" ]; then
       cd $TRAVIS_BUILD_DIR;
@@ -91,17 +104,6 @@ install:
       cd docroot;
       drush site-install subprofile --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal;
       drush config-set lightning_api.settings entity_json true --yes;
-    fi;'
-
-  # Update codebase to head and run db updates.
-  - 'if [ $VERSION = "HEAD" ]; then
-      cd $TRAVIS_BUILD_DIR;
-      rm -rf docroot/modules/contrib && rm -rf docroot/profiles/contrib/lightning && rm -rf vendor && rm composer.lock;
-      composer require acquia/lightning:dev-8.x-2.x --no-update;
-      composer update;
-      drupal cache:rebuild all;
-      drupal update:execute;
-      drupal update:lightning --no-interaction;
     fi;'
 
   # Generate the behat config.
