@@ -12,10 +12,6 @@ cache:
 php:
   - 7.0
 
-env:
-  - VERSION=STABLE TEST_TAGS=headless
-  - VERSION=HEAD TEST_TAGS=headless
-
 addons:
   apt:
     packages:
@@ -52,7 +48,7 @@ before_install:
 install:
   # Add Composer's local bin directory to the PATH so that we will be running
   # our installed versions of Drush, PHPCS, Behat, PhantomJS, etc.
-  - export PATH="$HOME/.composer/vendor/bin:$TRAVIS_BUILD_DIR/bin:$PATH"
+  - export PATH="$HOME/.composer/vendor/bin:$TRAVIS_BUILD_DIR/vendor/bin:$PATH"
 
   # Create the MySQL database and add a user for testing.
   - mysql -u root -e "CREATE DATABASE drupal; CREATE USER 'lightning'@'localhost' IDENTIFIED BY 'lightning'; GRANT ALL ON drupal.* TO 'lightning'@'localhost';"
@@ -78,14 +74,18 @@ install:
   # during drush updatedb.
   - drush pm-enable lightning_dev --yes
 
+  # Record the version of Lightning for the Configuration Updates.
+  - UPDATE_FROM=2.2.5 # @todo Switch to the following for the value of
+    # UPDATE_FROM after Lightning 2.2.6: "$(drupal lightning:version)"
+
   # Update codebase to head and run db updates.
-  - 'if [ $VERSION = "HEAD" ]; then
-      cd $TRAVIS_BUILD_DIR;
-      rm -rf docroot/modules/contrib && rm -rf docroot/profiles/contrib/lightning && rm -rf vendor && rm composer.lock;
-      composer require acquia/headless_lightning:dev-master --no-update;
-      composer update;
-      drupal update:execute;
-    fi;'
+  - cd $TRAVIS_BUILD_DIR
+  - composer nuke
+  - composer require acquia/headless_lightning:dev-8.x-2.x --no-update
+  - composer update
+  - drupal cache:rebuild all
+  - drush updatedb --yes
+  - drupal update:lightning $UPDATE_FROM --no-interaction
 
   # Generate the behat config.
   - cd $TRAVIS_BUILD_DIR

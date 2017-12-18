@@ -42,10 +42,8 @@
       ],
       "post-update-cmd": [
         "DrupalComposer\\DrupalScaffold\\Plugin::scaffold"
-      ]
-    },
-    "config": {
-        "bin-dir": "bin/"
+      ],
+      "nuke": "rm -rf docroot/modules/contrib && rm -rf docroot/profiles/contrib && rm -rf vendor && rm composer.lock"
     },
     "extra": {
         "installer-types": [
