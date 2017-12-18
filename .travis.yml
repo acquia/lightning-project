@@ -98,7 +98,6 @@ install:
       drupal lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --include=paragraphs --exclude=lightning_search;
       mkdir -p ./tests/features;
       curl -o tests/features/subprofile.feature  https://gist.githubusercontent.com/balsama/c8c03bb21f7a91a1a87d01ef185a3955/raw;
-      mkdir -p ./tests/features;
       chmod +w ./docroot/sites/default/settings.php;
       cd docroot;
       drush site-install subprofile --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal;
