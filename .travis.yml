@@ -71,6 +71,9 @@ install:
 
   # Create custom sub-profile and download custom tests.
   - 'if [ $VERSION = "SUBPROFILE" ]; then
+      cd $TRAVIS_BUILD_DIR/docroot;
+      # Need to install Lightning so that the sub-profile Console command is available.
+      drush site-install $PROFILE_NAME --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal;
       cd $TRAVIS_BUILD_DIR;
       composer require drupal/paragraphs;
       drupal lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --include=paragraphs --exclude=lightning_search;
