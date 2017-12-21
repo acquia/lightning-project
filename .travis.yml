@@ -93,8 +93,7 @@ install:
   - drush pm-enable lightning_dev --yes
 
   # Record the version of Lightning for the Configuration Updates.
-  - UPDATE_FROM=2.2.5 # @todo Switch to the following for the value of
-    # UPDATE_FROM after Lightning 2.2.6: "$(drupal lightning:version)"
+  - UPDATE_FROM=$(drupal lightning:version)
 
   # Update codebase to head and run db updates.
   - cd $TRAVIS_BUILD_DIR
