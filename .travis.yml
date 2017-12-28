@@ -98,7 +98,7 @@ install:
   # Update codebase to head and run db updates.
   - cd $TRAVIS_BUILD_DIR
   - composer nuke
-  - composer require acquia/lightning:dev-8.x-2.x --no-update
+  - composer require acquia/lightning:dev-8.x-3.x --no-update
   - composer update
   - drupal cache:rebuild all
   - drush updatedb --yes
