@@ -19,23 +19,28 @@
         "composer/composer": "^1.3",
         "drush/drush": "^9.0",
         "drupal/console": "1.0.1",
-        "drupal/media_entity_generic": "^1.0"
+        "drupal/media_entity_generic": "^1.0",
+        "acquia/lightning_dev": "dev-8.x-1.x"
     },
     "require": {
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "cweagans/composer-patches": "^1.6.0",
         "acquia/lightning": "~3.0.0"
     },
-    "repositories": [
-        {
+    "repositories": {
+        "drupal": {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         },
-        {
+        "assets": {
             "type": "composer",
             "url": "https://asset-packagist.org"
+        },
+        "dev": {
+            "type": "vcs",
+            "url": "https://github.com/acquia/lightning-dev"
         }
-    ],
+    },
     "scripts": {
       "post-install-cmd": [
         "DrupalComposer\\DrupalScaffold\\Plugin::scaffold"
