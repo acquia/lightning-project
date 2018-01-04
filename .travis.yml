@@ -88,6 +88,10 @@ install:
   - drush site-install $PROFILE_NAME --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
   - drush config-set system.logging error_level all --yes
 
+  # Enable the dev module which will perform any manual update steps needed
+  # during database updates.
+  - drush pm-enable lightning_dev --yes
+
   # Record the version of Lightning for the Configuration Updates.
   - UPDATE_FROM=$(drupal lightning:version)
 
