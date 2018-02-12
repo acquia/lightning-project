@@ -63,19 +63,14 @@ install:
   - phpenv config-add drupal.php.ini
   - phpenv rehash
 
-  # Add Devel, which is a dependency of Lightning Dev, to the codebase
-  - composer require drupal/devel --no-update
-
   # Build the Lightning code base.
   - composer install
 
   # Create custom sub-profile and download custom tests. We need Lightning to be
-  # installed foe the sub-profile command to run. But we will reinstall later
+  # installed for the sub-profile command to run. But we will reinstall later
   # and run the update.
   - 'if [ $VERSION = "SUBPROFILE" ]; then
-      cd $TRAVIS_BUILD_DIR/docroot;
-      drush site-install lightning --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal;
-      cd $TRAVIS_BUILD_DIR;
+      lightning install "mysql\://lightning:lightning@127.0.0.1/drupal"; lightning "http://127.0.0.1:8080";
       composer require drupal/paragraphs;
       drupal lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --include=paragraphs --exclude=lightning_search;
       mkdir -p ./tests/features;
@@ -84,13 +79,7 @@ install:
     fi;'
 
   # Install Lightning.
-  - cd $TRAVIS_BUILD_DIR/docroot
-  - drush site-install $PROFILE_NAME --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
-  - drush config-set system.logging error_level all --yes
-
-  # Enable the dev module which will perform any manual update steps needed
-  # during database updates.
-  - drush pm-enable lightning_dev --yes
+  - lightning install 'mysql\://lightning:lightning@127.0.0.1/drupal' $PROFILE_NAME 'http://127.0.0.1:8080'
 
   # Record the version of Lightning for the Configuration Updates.
   - UPDATE_FROM=$(drupal lightning:version)
@@ -104,12 +93,10 @@ install:
   - drush updatedb --yes
   - drupal update:lightning $UPDATE_FROM --no-interaction
 
-  # Generate the behat config.
+  # Generate the Behat config.
   - cd $TRAVIS_BUILD_DIR
-  - drupal behat:init http://127.0.0.1:8080 --merge=../docroot/profiles/contrib/lightning/tests/behat.yml
-  - drupal behat:include ../docroot/profiles/contrib/lightning/tests/features --with-subcontexts=../docroot/profiles/contrib/lightning/tests/features/bootstrap --with-subcontexts=../docroot/profiles/contrib/lightning/src/LightningExtension/Context
-  - if [ $VERSION = "SUBPROFILE" ]; then drupal behat:include ../tests/features; fi;
-  - cd $TRAVIS_BUILD_DIR/docroot
+  - lightning configure:behat 'http://127.0.0.1:8080'
+  - cd docroot
 
 before_script:
   - drush runserver --default-server=builtin 8080 &>/dev/null &
@@ -119,9 +106,10 @@ before_script:
   - mkdir tmp
   - selenium-server-standalone -port 4444 -log tmp/selenium2.log &
   - sleep 5
+  - cd ..
 
 script:
-  - behat --strict --stop-on-failure --config ./sites/default/files/behat.yml --tags=${TEST_TAGS}
+  - behat --strict --stop-on-failure --config .behat.yml --tags=${TEST_TAGS}
 
 matrix:
   fast_finish: true
