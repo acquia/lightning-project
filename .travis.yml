@@ -85,7 +85,6 @@ install:
   - UPDATE_FROM=$(drupal lightning:version)
 
   # Update codebase to head and run db updates.
-  - cd $TRAVIS_BUILD_DIR
   - composer nuke
   - composer require acquia/lightning:dev-8.x-3.x --no-update
   - composer update
@@ -94,7 +93,6 @@ install:
   - drupal update:lightning $UPDATE_FROM --no-interaction
 
   # Generate the Behat config.
-  - cd $TRAVIS_BUILD_DIR
   - lightning configure:behat 'http://127.0.0.1:8080'
   - cd docroot
 
