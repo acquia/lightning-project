@@ -73,9 +73,9 @@ install:
       lightning install "mysql\://lightning:lightning@127.0.0.1/drupal"; lightning "http://127.0.0.1:8080";
       composer require drupal/paragraphs;
       drupal lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --include=paragraphs --exclude=lightning_search;
-      mkdir -p ./tests/features;
-      curl -o tests/features/subprofile.feature  https://gist.githubusercontent.com/balsama/c8c03bb21f7a91a1a87d01ef185a3955/raw;
-      curl -o tests/behat.partial.yml https://gist.githubusercontent.com/balsama/3a60df268f76e57da79c7f179cf7ceaa/raw/b3f5d81f24cd977e60203c4ba27cf8cee1251c13/behat.partial.yml;
+      mkdir -p ./docroot/profiles/custom/subprofile/tests/features;
+      curl -o ./docroot/profiles/custom/subprofile/tests/features/subprofile.feature  https://gist.githubusercontent.com/balsama/c8c03bb21f7a91a1a87d01ef185a3955/raw;
+      curl -o ./docroot/profiles/custom/subprofile/tests/behat.partial.yml https://gist.githubusercontent.com/balsama/3a60df268f76e57da79c7f179cf7ceaa/raw/b3f5d81f24cd977e60203c4ba27cf8cee1251c13/behat.partial.yml;
       chmod +w ./docroot/sites/default/settings.php;
     fi;'
 
