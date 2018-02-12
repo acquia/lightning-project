@@ -63,7 +63,7 @@ install:
   - composer install
 
   # Install Lightning.
-  - lightning install 'mysql\://lightning:lightning@127.0.0.1/drupal' headless_lightning 'http://127.0.0.1:8080'
+  - lightning install 'mysql\://lightning:lightning@127.0.0.1/drupal' headless_lightning
 
   # Record the version of Lightning for the Configuration Updates.
   - UPDATE_FROM=$(drupal lightning:version)
@@ -76,8 +76,11 @@ install:
   - drush updatedb --yes
   - drupal update:lightning $UPDATE_FROM --no-interaction
 
-before_script:
+  # Generate the Behat config.
+  - lightning configure:behat 'http://127.0.0.1:8080'
   - cd docroot
+
+before_script:
   - drush runserver --default-server=builtin 8080 &>/dev/null &
 
   # Start Selenium and dump its ginormous log into a temporary file.
