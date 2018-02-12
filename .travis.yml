@@ -69,7 +69,7 @@ install:
   # Create custom sub-profile and download custom tests. We need Lightning to be
   # installed for the sub-profile command to run. But we will reinstall later
   # and run the update.
-  - lightning install "mysql\://lightning:lightning@127.0.0.1/drupal"; lightning "http://127.0.0.1:8080"
+  - lightning install "mysql\://lightning:lightning@127.0.0.1/drupal" minimal
   - composer require drupal/paragraphs
   - drupal lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --include=paragraphs --exclude=lightning_search
   - SUBPROFILE_TESTS=$TRAVIS_BUILD_DIR/docroot/profiles/custom/subprofile/tests
