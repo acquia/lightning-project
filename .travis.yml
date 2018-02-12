@@ -59,26 +59,16 @@ install:
   - phpenv config-add drupal.php.ini
   - phpenv rehash
 
-  # Add Devel, which is a dependency of Lightning Dev, to the codebase
-  - composer require drupal/devel --no-update
-
   # Build the Lightning code base.
   - composer install
 
   # Install Lightning.
-  - cd $TRAVIS_BUILD_DIR/docroot
-  - drush site-install headless_lightning --yes --account-pass=admin --db-url=mysql://lightning:lightning@127.0.0.1/drupal
-  - drush config-set system.logging error_level all --yes
-
-  # Enable the dev module which will perform any manual update steps needed
-  # during drush updatedb.
-  - drush pm-enable lightning_dev --yes
+  - lightning install 'mysql\://lightning:lightning@127.0.0.1/drupal' headless_lightning
 
   # Record the version of Lightning for the Configuration Updates.
   - UPDATE_FROM=$(drupal lightning:version)
 
   # Update codebase to head and run db updates.
-  - cd $TRAVIS_BUILD_DIR
   - composer nuke
   - composer require acquia/headless_lightning:dev-master --no-update
   - composer update
@@ -86,12 +76,9 @@ install:
   - drush updatedb --yes
   - drupal update:lightning $UPDATE_FROM --no-interaction
 
-  # Generate the behat config.
-  - cd $TRAVIS_BUILD_DIR
-  - drupal behat:init http://127.0.0.1:8080 --merge=../docroot/profiles/contrib/lightning/tests/behat.yml
-  - drupal behat:include ../docroot/profiles/contrib/lightning/tests/features --with-subcontexts=../docroot/profiles/contrib/lightning/tests/features/bootstrap --with-subcontexts=../docroot/profiles/contrib/lightning/src/LightningExtension/Context
-  - drupal behat:include ../docroot/profiles/contrib/headless_lightning/tests/behat/features
-  - cd $TRAVIS_BUILD_DIR/docroot
+  # Generate the Behat config.
+  - lightning configure:behat 'http://127.0.0.1:8080'
+  - cd docroot
 
 before_script:
   - drush runserver --default-server=builtin 8080 &>/dev/null &
@@ -101,9 +88,10 @@ before_script:
   - mkdir tmp
   - selenium-server-standalone -port 4444 -log tmp/selenium2.log &
   - sleep 5
+  - cd ..
 
 script:
-  - behat --strict --stop-on-failure --config ./sites/default/files/behat.yml --tags=headless
+  - behat --strict --stop-on-failure --config .behat.yml --tags=headless
 
 matrix:
   fast_finish: true
