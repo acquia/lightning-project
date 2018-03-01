@@ -11,6 +11,7 @@ cache:
     - "$HOME/.npm"
 php:
   - 7.0
+  - 7.1
 
 env:
   - TEST_TAGS=lightning PROFILE_NAME=lightning
@@ -82,19 +83,14 @@ install:
   # Install Lightning.
   - lightning install 'mysql\://lightning:lightning@127.0.0.1/drupal' $PROFILE_NAME 'http://127.0.0.1:8080'
 
-  # Record the version of Lightning for the Configuration Updates.
-  - UPDATE_FROM=$(drupal lightning:version)
-
-  # Update codebase to head and run db updates.
+  # Update codebase to head.
   - composer nuke
   - composer require acquia/lightning:dev-8.x-3.x --no-update
   - composer update
-  - drupal cache:rebuild all
+  # Run database and Lightning config updates.
+  - drush cache-rebuild
   - drush updatedb --yes
-  - drupal update:lightning $UPDATE_FROM --no-interaction
-  # Notify all modules that lightning_dev is installed, so that they can set up
-  # the testing environment as needed.
-  - drush php:eval '\Drupal::moduleHandler()->invokeAll("modules_installed", [["lightning_dev"]])'
+  - drush update:lightning --no-interaction
 
   # Generate the Behat config.
   - lightning configure:behat 'http://127.0.0.1:8080'
