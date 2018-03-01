@@ -65,16 +65,14 @@ install:
   # Install Lightning.
   - lightning install 'mysql\://lightning:lightning@127.0.0.1/drupal' headless_lightning
 
-  # Record the version of Lightning for the Configuration Updates.
-  - UPDATE_FROM=$(drupal lightning:version)
-
-  # Update codebase to head and run db updates.
+  # Update codebase to head.
   - composer nuke
   - composer require acquia/headless_lightning:dev-master --no-update
   - composer update
-  - drupal cache:rebuild all
+  # Run database and Lightning config updates.
+  - drush cache-rebuild
   - drush updatedb --yes
-  - drupal update:lightning $UPDATE_FROM --no-interaction
+  - drush update:lightning --no-interaction
 
   # Generate the Behat config.
   - lightning configure:behat 'http://127.0.0.1:8080'
