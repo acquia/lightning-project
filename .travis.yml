@@ -91,9 +91,6 @@ install:
   - drush cache-rebuild
   - drush updatedb --yes
   - drush update:lightning --no-interaction
-  # Notify all modules that lightning_dev is installed, so that they can set up
-  # the testing environment as needed.
-  - drush php:eval '\Drupal::moduleHandler()->invokeAll("modules_installed", [["lightning_dev"]])'
 
   # Generate the Behat config.
   - lightning configure:behat 'http://127.0.0.1:8080'
