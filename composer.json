@@ -26,7 +26,7 @@
             "url": "https://asset-packagist.org"
         },
         "dev": {
-            "type": "vcs",
+            "type": "github",
             "url": "https://github.com/acquia/lightning-dev",
             "no-api": true
         }
