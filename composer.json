@@ -27,7 +27,8 @@
         },
         "dev": {
             "type": "vcs",
-            "url": "https://github.com/acquia/lightning-dev"
+            "url": "https://github.com/acquia/lightning-dev",
+            "no-api": true
         }
     },
     "scripts": {
