@@ -15,7 +15,7 @@ php:
 
 env:
   - TEST_TAGS=lightning PROFILE_NAME=lightning
-  - TEST_TAGS=~search PROFILE_NAME=subprofile
+  - TEST_TAGS=~search PROFILE_NAME=lightning_extender
 
 addons:
   apt:
@@ -67,21 +67,12 @@ install:
   # Build the Lightning code base.
   - composer install
 
-  # Create custom sub-profile and download custom tests. We need Lightning to be
-  # installed for the sub-profile command to run. But we will reinstall later
-  # and run the update.
-  - lightning install "mysql\://lightning:lightning@127.0.0.1/drupal"
-  - composer require drupal/paragraphs
-  - drupal lightning:subprofile --no-interaction --name="Lightning Extender" --machine-name=subprofile --include=paragraphs --exclude=lightning_search
-  - SUBPROFILE_TESTS=$TRAVIS_BUILD_DIR/docroot/profiles/custom/subprofile/tests
-  - mkdir -p $SUBPROFILE_TESTS/features
-  - curl -o $SUBPROFILE_TESTS/features/subprofile.feature https://gist.githubusercontent.com/balsama/c8c03bb21f7a91a1a87d01ef185a3955/raw
-  - curl -o $SUBPROFILE_TESTS/behat.partial.yml https://gist.githubusercontent.com/balsama/3a60df268f76e57da79c7f179cf7ceaa/raw/b3f5d81f24cd977e60203c4ba27cf8cee1251c13/behat.partial.yml
-  # settings.php must be writeable in order to reinstall.
-  - chmod +w ./docroot/sites/default/settings.php
-
   # Install Lightning.
-  - lightning install 'mysql\://lightning:lightning@127.0.0.1/drupal' $PROFILE_NAME 'http://127.0.0.1:8080'
+  - DB_URL=mysql\://lightning:lightning@127.0.0.1/drupal
+  - HOST=http://127.0.0.1:8080
+  - lightning install $DB_URL lightning $HOST
+  # Reinstall Lightning if we want to run tests on a sub-profile.
+  - [ if $PROFILE_NAME != 'lightning' ]; then lightning install $DB_URL $PROFILE_NAME $HOST; fi
 
   # Update codebase to head.
   - composer nuke
@@ -92,11 +83,8 @@ install:
   - drush updatedb --yes
   - drush update:lightning --no-interaction
 
-  # Generate the Behat config.
-  - lightning configure:behat 'http://127.0.0.1:8080'
-  - cd docroot
-
 before_script:
+  - cd docroot
   - drush runserver --default-server=builtin 8080 &>/dev/null &
 
   # Start Selenium and dump its ginormous log into a temporary file.
