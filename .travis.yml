@@ -47,7 +47,7 @@ install:
   - HOST=http://127.0.0.1:8080
   - lightning install $DB_URL lightning $HOST
   # Reinstall Lightning if we want to run tests on a sub-profile.
-  - [ if $PROFILE_NAME != 'lightning' ]; then lightning install $DB_URL $PROFILE_NAME $HOST; fi
+  - if [ $PROFILE_NAME != 'lightning' ]; then lightning install $DB_URL $PROFILE_NAME $HOST; fi
 
   # Update codebase to head.
   - composer nuke
