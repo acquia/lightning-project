@@ -43,7 +43,7 @@ install:
   - composer install
 
   # Install Lightning.
-  - DB_URL=mysql\://lightning:lightning@127.0.0.1/drupal
+  - DB_URL='mysql\://lightning:lightning@127.0.0.1/drupal'
   - HOST=http://127.0.0.1:8080
   - lightning install $DB_URL lightning $HOST
   # Reinstall Lightning if we want to run tests on a sub-profile.
@@ -53,6 +53,8 @@ install:
   - composer nuke
   - composer require acquia/lightning:dev-8.x-3.x --no-update
   - composer update
+  # Regenerate Behat configuration, in case testing set-up has changed in HEAD.
+  - lightning configure:behat $HOST
   # Run database and Lightning config updates.
   - drush cache-rebuild
   - drush updatedb --yes
