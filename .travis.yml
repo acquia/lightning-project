@@ -28,7 +28,7 @@ before_install:
 install:
   # Add Composer's local bin directory to the PATH so that we will be running
   # our installed versions of Drush, PHPCS, Behat, PhantomJS, etc.
-  - export PATH="$HOME/.composer/vendor/bin:$TRAVIS_BUILD_DIR/vendor/bin:$PATH"
+  - export PATH="$HOME/.composer/vendor/bin:$TRAVIS_BUILD_DIR/docroot/vendor/bin:$PATH"
 
   # Create the MySQL database and add a user for testing.
   - mysql -u root -e "CREATE DATABASE drupal; CREATE USER 'lightning'@'localhost' IDENTIFIED BY 'lightning'; GRANT ALL ON drupal.* TO 'lightning'@'localhost';"
@@ -39,6 +39,9 @@ install:
   - phpenv config-add drupal.php.ini
   - phpenv rehash
 
+  # README.md explains how to install Composer dependencies in the docroot.
+  # Do the same thing here in order to prove that it works correctly.
+  - composer config vendor-dir docroot/vendor
   # Build the Lightning code base.
   - composer install
 
