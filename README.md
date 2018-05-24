@@ -7,13 +7,13 @@ $ composer create-project acquia/lightning-project MY_PROJECT
 Composer will create a new directory called MY_PROJECT containing a `docroot` directory with a full Lightning code base therein. You can then install it like you would any other Drupal site.
 
 Normally, Composer will install all dependencies into a `vendor` directory that is *next* to `docroot`, not inside it. This may create problems in certain hosting environments, so if you need to, you can tell Composer to install dependencies into `docroot/vendor` instead:
-
 ```
 $ composer create-project acquia/lightning-project MY_PROJECT --no-install
 $ composer config vendor-dir docroot/vendor
 $ cd MY_PROJECT
 $ composer install
 ```
+Either way, remember to keep the `composer.json` and `composer.lock` files that exists above `docroot` safe -- they are controlling your dependencies.
 
 ## Maintenance
 `drush make`, `drush pm-download`, `drush pm-update` and their ilk are the old-school way of maintaining your code base. Forget them. You're in Composer land now!
