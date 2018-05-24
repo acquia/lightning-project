@@ -13,7 +13,7 @@ $ composer config vendor-dir docroot/vendor
 $ cd MY_PROJECT
 $ composer install
 ```
-Either way, remember to keep the `composer.json` and `composer.lock` files that exists above `docroot` safe -- they are controlling your dependencies.
+Either way, remember to keep the `composer.json` and `composer.lock` files that exist above `docroot` -- they are controlling your dependencies.
 
 ## Maintenance
 `drush make`, `drush pm-download`, `drush pm-update` and their ilk are the old-school way of maintaining your code base. Forget them. You're in Composer land now!
