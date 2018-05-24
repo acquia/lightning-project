@@ -33,7 +33,7 @@
     "scripts": {
       "post-install-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
       "post-update-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-      "nuke": "rm -r -f docroot/modules/contrib docroot/profiles/contrib/lightning vendor docroot/vendor composer.lock"
+      "nuke": "rm -r -f docroot/modules/contrib docroot/profiles/contrib/lightning vendor composer.lock"
     },
     "extra": {
         "installer-types": [
