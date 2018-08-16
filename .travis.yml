@@ -51,7 +51,7 @@ install:
 
   # Update codebase to head.
   - composer nuke
-  - composer require acquia/lightning:dev-8.x-3.x --no-update
+  - composer require acquia/lightning:dev-8.x-4.x --no-update
   - composer update
   # Regenerate Behat configuration, in case testing set-up has changed in HEAD.
   - lightning configure:behat $HOST
