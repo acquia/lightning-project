@@ -30,10 +30,17 @@
             "no-api": true
         }
     },
+    "config": {
+        "process-timeout": 0
+    },
     "scripts": {
-      "post-install-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-      "post-update-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-      "nuke": "rm -r -f docroot/modules/contrib docroot/profiles/contrib vendor composer.lock"
+        "post-install-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+        "post-update-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+        "nuke": "rm -r -f docroot/modules/contrib docroot/profiles/contrib/lightning vendor composer.lock",
+        "quick-start": [
+            "composer install",
+            "php docroot/core/scripts/drupal quick-start headless_lightning --no-interaction"
+        ]
     },
     "extra": {
         "installer-types": [
