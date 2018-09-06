@@ -30,6 +30,9 @@
             "no-api": true
         }
     },
+    "config": {
+        "process-timeout": 0
+    },
     "scripts": {
         "post-install-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
         "post-update-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
