@@ -13,7 +13,7 @@
     "require": {
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "cweagans/composer-patches": "^1.6.0",
-        "acquia/lightning": "~3.1.0"
+        "acquia/lightning": "~3.2.0"
     },
     "repositories": {
         "drupal": {
@@ -30,10 +30,17 @@
             "no-api": true
         }
     },
+    "config": {
+        "process-timeout": 0
+    },
     "scripts": {
-      "post-install-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-      "post-update-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-      "nuke": "rm -r -f docroot/modules/contrib docroot/profiles/contrib/lightning vendor composer.lock"
+        "post-install-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+        "post-update-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+        "nuke": "rm -r -f docroot/modules/contrib docroot/profiles/contrib/lightning vendor composer.lock",
+        "quick-start": [
+            "composer install",
+            "php docroot/core/scripts/drupal quick-start lightning --no-interaction"
+        ]
     },
     "extra": {
         "installer-types": [
