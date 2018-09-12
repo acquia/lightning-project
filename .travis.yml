@@ -44,6 +44,8 @@ install:
   - composer nuke
   - composer require acquia/headless_lightning:dev-master --no-update
   - composer update
+  # Regenerate Behat configuration, in case testing set-up has changed in HEAD.
+  - lightning configure:behat $HOST
   # Run database and Lightning config updates.
   - drush cache-rebuild
   - drush updatedb --yes
