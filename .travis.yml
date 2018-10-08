@@ -41,6 +41,7 @@ install:
 
   # Build the Lightning code base.
   - composer install
+  - composer require --dev acquia/lightning_dev:dev-8.x-1.x
 
   # Install Lightning.
   - DB_URL='mysql\://lightning:lightning@127.0.0.1/drupal'
