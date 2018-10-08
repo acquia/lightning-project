@@ -36,7 +36,7 @@
     "scripts": {
         "post-install-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
         "post-update-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-        "post-create-project-cmd": "rm .travis.yml",
+        "post-create-project-cmd": "rm .travis.yml && composer remove --dev acquia/lightning_dev",
         "nuke": "rm -r -f docroot/modules/contrib docroot/profiles/contrib/lightning vendor composer.lock",
         "quick-start": [
             "composer install",
