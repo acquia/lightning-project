@@ -66,7 +66,7 @@ before_script:
   - drush pm-uninstall --yes history
 
 script:
-  - behat --strict --stop-on-failure --config .behat.yml --tags=${TEST_TAGS}
+  - behat --strict --stop-on-failure --tags=${TEST_TAGS}
 
 matrix:
   fast_finish: true
