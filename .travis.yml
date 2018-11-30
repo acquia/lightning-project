@@ -57,7 +57,7 @@ before_script:
   - google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost &
 
 script:
-  - behat --strict --stop-on-failure --config .behat.yml --tags=headless
+  - behat --strict --stop-on-failure --tags=headless
 
 matrix:
   fast_finish: true
