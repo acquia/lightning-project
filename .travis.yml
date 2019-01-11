@@ -9,7 +9,6 @@ cache:
     - "$HOME/.drush/cache"
     - "$HOME/.npm"
 php:
-  - 7.0
   - 7.1
 
 env:
@@ -41,6 +40,7 @@ install:
 
   # Build the Lightning code base.
   - composer install
+  - composer require --dev acquia/lightning_dev:dev-8.x-1.x drupal/media_entity_generic:^1.0
 
   # Install Lightning.
   - DB_URL='mysql\://lightning:lightning@127.0.0.1/drupal'

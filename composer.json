@@ -2,13 +2,11 @@
     "name": "acquia/lightning-project",
     "description": "Project template for Drupal 8 sites built with the Lightning distribution.",
     "type": "project",
-    "license": "GPL-2.0+",
+    "license": "GPL-2.0-or-later",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require-dev": {
-        "drush/drush": "^9.0",
-        "drupal/media_entity_generic": "^1.0",
-        "acquia/lightning_dev": "dev-8.x-1.x"
+        "drush/drush": "^9.0"
     },
     "require": {
         "drupal-composer/drupal-scaffold": "^2.0.0",
@@ -36,6 +34,7 @@
     "scripts": {
         "post-install-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
         "post-update-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+        "post-create-project-cmd": "rm .travis.yml behat.yml",
         "nuke": "rm -r -f docroot/modules/contrib docroot/profiles/contrib/lightning vendor composer.lock",
         "quick-start": [
             "composer install",
