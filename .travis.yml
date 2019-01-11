@@ -52,6 +52,7 @@ install:
 
   # Set config needed for testing.
   - drush cset lightning_api.settings entity_json true --yes
+  - drush cset lightning_api.settings bundle_docs true --yes
 
   # Update codebase to head.
   - composer nuke
