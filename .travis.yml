@@ -64,6 +64,7 @@ install:
   - drush cache-rebuild
   - drush updatedb --yes
   - drush update:lightning --no-interaction
+  - drush cache-rebuild
 
 before_script:
   - drush runserver --default-server=builtin 8080 &>/dev/null &
