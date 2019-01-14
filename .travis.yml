@@ -64,7 +64,6 @@ before_script:
 
   - drush runserver --default-server=builtin 8080 &>/dev/null &
   - chromedriver --port=4444 &
-  - google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost &
 
 script:
   - behat --strict --tags=${TEST_TAGS}
