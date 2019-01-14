@@ -22,11 +22,11 @@ events:
     #        - composer install
     #
     # Install application.
-    # If you have tests defined for your application, uncomment these lines
-    # to install and test. (Note that you will also need to uncomment the
-    # "build-dev" step above so that you have a codebase to work with.) This
-    # assumes you have a well-configured settings.php file committed to your
-    # repo and all testing dependencies like Behat and PHPUnit as dev
+    # Uncomment these lines if you have tests defined for your application.
+    # (Note that you will also need to uncomment the "build-dev" step above so
+    # that you have a codebase to work with.) This assumes you have a
+    # well-configured settings.php file committed to your repo and all testing
+    # dependencies like Behat and PHPUnit as dev
     # dependencies.
     #  - test:
     #      type: script
