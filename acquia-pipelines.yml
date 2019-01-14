@@ -13,8 +13,8 @@ events:
   build:
     steps:
     # Build a development codebase suitable for testing.
-    # Uncomment these lines if you have set up dev dependencies and testing for
-    # your project.
+    # Uncomment these lines if you have included testing dependencies in
+    # Composer's "require-dev" section.
     #  - build-dev:
     #      type: script
     #      script:
