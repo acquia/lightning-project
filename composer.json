@@ -1,52 +1,22 @@
 {
     "name": "acquia/lightning-project",
-    "description": "Project template for Drupal 8 sites built with the Lightning distribution.",
     "type": "project",
-    "license": "GPL-2.0+",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "require-dev": {
-        "drush/drush": "^9.0",
-        "drupal/media_entity_generic": "^1.0",
-        "acquia/lightning_dev": "dev-8.x-1.x"
-    },
+    "description": "Project template for Drupal 8 sites built with the Lightning distribution.",
+    "license": "GPL-2.0-or-later",
     "require": {
-        "drupal-composer/drupal-scaffold": "^2.0.0",
+        "acquia/lightning": "~3.2.0",
         "cweagans/composer-patches": "^1.6.0",
-        "acquia/lightning": "~3.2.0"
+        "drupal-composer/drupal-scaffold": "^2.0.0"
     },
-    "repositories": {
-        "drupal": {
-            "type": "composer",
-            "url": "https://packages.drupal.org/8"
-        },
-        "assets": {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
-        },
-        "dev": {
-            "type": "github",
-            "url": "https://github.com/acquia/lightning-dev",
-            "no-api": true
-        }
+    "require-dev": {
+        "drush/drush": "^9.0"
     },
     "config": {
         "process-timeout": 0
     },
-    "scripts": {
-        "post-install-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-        "post-update-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-        "nuke": "rm -r -f docroot/modules/contrib docroot/profiles/contrib/lightning vendor composer.lock",
-        "quick-start": [
-            "composer install",
-            "php docroot/core/scripts/drupal quick-start lightning --no-interaction"
-        ]
-    },
     "extra": {
-        "installer-types": [
-            "bower-asset",
-            "npm-asset"
-        ],
+        "composer-exit-on-patch-failure": true,
+        "enable-patching": true,
         "installer-paths": {
             "docroot/core": [
                 "type:drupal-core"
@@ -69,7 +39,36 @@
                 "type:drupal-drush"
             ]
         },
-        "enable-patching": true,
-        "composer-exit-on-patch-failure": true
+        "installer-types": [
+            "bower-asset",
+            "npm-asset"
+        ]
+    },
+    "repositories": {
+        "drupal": {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        "assets": {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        },
+        "dev": {
+            "type": "github",
+            "url": "https://github.com/acquia/lightning-dev",
+            "no-api": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "post-install-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+        "post-update-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+        "post-create-project-cmd": "rm -r -f .travis.yml behat.yml .travis-ci",
+        "nuke": "rm -r -f docroot/modules/contrib docroot/profiles/contrib/lightning vendor composer.lock",
+        "quick-start": [
+            "composer install",
+            "php docroot/core/scripts/drupal quick-start lightning --no-interaction"
+        ]
     }
 }
