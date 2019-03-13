@@ -1,63 +1,55 @@
 dist: trusty
 language: php
 
+php:
+  - 7.1
+
 cache:
   bundler: true
-  apt: true
   directories:
     - "$HOME/.composer/cache"
     - "$HOME/.drush/cache"
     - "$HOME/.npm"
-php:
-  - 7.0
 
 addons:
   chrome: stable
 
 before_install:
   - phpenv config-rm xdebug.ini
+  - phpenv config-add .travis-ci/travis.php.ini
+  - phpenv rehash
+
   - composer self-update
   - composer --version
   - google-chrome-stable --version
 
 install:
   # Add Composer's local bin directory to the PATH so that we will be running
-  # our installed versions of Drush, PHPCS, Behat, PhantomJS, etc.
+  # our installed versions of Drush, PHPCS, Behat, etc.
   - export PATH="$HOME/.composer/vendor/bin:$TRAVIS_BUILD_DIR/vendor/bin:$PATH"
-
-  # Create the MySQL database and add a user for testing.
-  - mysql -u root -e "CREATE DATABASE drupal; CREATE USER 'lightning'@'localhost' IDENTIFIED BY 'lightning'; GRANT ALL ON drupal.* TO 'lightning'@'localhost';"
-
-  # PHP conf tweaks
-  - echo 'max_execution_time = 120' >> drupal.php.ini;
-  - echo 'sendmail_path = /bin/true' >> drupal.php.ini;
-  - phpenv config-add drupal.php.ini
-  - phpenv rehash
 
   # Build the Lightning code base.
   - composer install
 
   # Install Lightning.
-  - lightning install 'mysql\://lightning:lightning@127.0.0.1/drupal' headless_lightning
+  - lightning install 'sqlite\://db.sqlite' headless_lightning
 
-  # Update codebase to head.
+  # Update code base to head.
   - composer nuke
   - composer require acquia/headless_lightning:dev-master --no-update
   - composer update
+
   # Run database and Lightning config updates.
   - drush cache-rebuild
   - drush updatedb --yes
   - drush update:lightning --no-interaction
 
-  # Generate the Behat config.
-  - lightning configure:behat 'http://127.0.0.1:8080'
-
 before_script:
   - drush runserver --default-server=builtin 8080 &>/dev/null &
-  - google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost &
+  - chromedriver --port=4444 &
 
 script:
-  - behat --strict --stop-on-failure --tags=headless
+  - behat --strict --stop-on-failure
 
 matrix:
   fast_finish: true
