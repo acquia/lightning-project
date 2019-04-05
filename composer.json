@@ -6,7 +6,8 @@
     "require": {
         "acquia/lightning": "~3.2.0",
         "cweagans/composer-patches": "^1.6.0",
-        "drupal-composer/drupal-scaffold": "^2.0.0"
+        "drupal-composer/drupal-scaffold": "^2.0.0",
+        "symfony/http-foundation": "3.4.23"
     },
     "require-dev": {
         "drush/drush": "^9.0"
