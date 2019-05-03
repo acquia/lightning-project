@@ -9,7 +9,8 @@
         "drupal-composer/drupal-scaffold": "^2.0.0"
     },
     "require-dev": {
-        "drush/drush": "^9.0"
+        "drush/drush": "^9.0",
+        "webflo/drupal-core-require-dev": "^8.7.0"
     },
     "config": {
         "process-timeout": 0
