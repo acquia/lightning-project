@@ -57,16 +57,11 @@ install:
   - drush pm-uninstall --yes history
 
 before_script:
-  # Set config values needed for testing.
-  - drush config:set lightning_api.settings entity_json true --yes
-  - drush config:set lightning_api.settings bundle_docs true --yes
-  - drush config:set system.date timezone.default '' --yes
-
-  - drush runserver --default-server=builtin 8080 &>/dev/null &
+  - drush runserver --default-server=builtin --quiet 8080 &
   - chromedriver --port=4444 &
 
 script:
-  - behat --strict --tags=${TEST_TAGS} --tags=~javascript
+  - behat --strict --tags=${TEST_TAGS}
 
 matrix:
   fast_finish: true
