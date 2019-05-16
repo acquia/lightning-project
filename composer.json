@@ -15,7 +15,7 @@
         "process-timeout": 0
     },
     "extra": {
-        "composer-exit-on-patch-failure": true,
+        "composer-exit-on-patch-failure": false,
         "enable-patching": true,
         "installer-paths": {
             "docroot/core": [
