@@ -37,7 +37,7 @@ install:
 
   # Add dev dependencies that shouldn't be shipped to implementors and build the
   # Lightning code base.
-  - composer require --dev acquia/lightning_dev:dev-8.x-1.x drupal/media_entity_generic:^1.0 --no-update
+  - composer require --dev acquia/lightning_dev:dev-8.x-1.x drupal/media_entity_generic:^1.0 drupal/lightning_layout:2.0.0 --no-update
   - composer install
 
   # Install Lightning.
