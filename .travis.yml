@@ -47,7 +47,7 @@ install:
 
   # Update code base to HEAD.
   - composer nuke
-  - composer require acquia/lightning:dev-8.x-3.x --no-update
+  - composer require acquia/lightning:dev-8.x-4.x --no-update
   - composer update
 
   # Run database and Lightning config updates.
