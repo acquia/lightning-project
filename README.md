@@ -1,21 +1,14 @@
 This is a Composer-based installer for the [Lightning](https://www.drupal.org/project/lightning) Drupal distribution. Welcome to the future!
 
 ## Get Started
-
 ```
 $ composer create-project acquia/lightning-project MY_PROJECT
 $ cd MY_PROJECT && composer quick-start
 ```
 
-This will create a functioning Lightning site, open a web browser, and log you
-into the site using Drupal's built-in Quick Start command. If you'd rather use
-your own database and web server, you can skip the second step above and install
-Lightning like you would any other Drupal site.
+This will create a functioning Lightning site, open a web browser, and log you into the site using Drupal's built-in Quick Start command. If you'd rather use your own database and web server, you can skip the second step above and install Lightning like you would any other Drupal site.
 
-Normally, Composer will install all dependencies into a `vendor` directory that
-is *next* to `docroot`, not inside it. This may create problems in certain
-hosting environments, so if you need to, you can tell Composer to install
-dependencies into `docroot/vendor` instead:
+Normally, Composer will install all dependencies into a `vendor` directory that is *next* to `docroot`, not inside it. This may create problems in certain hosting environments, so if you need to, you can tell Composer to install dependencies into `docroot/vendor` instead:
 
 ```
 $ composer create-project acquia/lightning-project MY_PROJECT --no-install
@@ -74,3 +67,11 @@ Lightning's minor versions correspond to Drupal core's. So, for example, `acquia
 composer require --no-update acquia/lightning:~3.3.0
 composer update
 ```
+
+## Compatibility table
+| `acquia/lightning` version | Drupal core version | Drush version |
+|----------------------------|---------------------|---------------|
+| 4.0.x | 8.7.x | `>=9.4` |
+| 3.3.x | 8.7.x | `>=9.4` |
+| 3.2.x | 8.6.x | `>=9.4` |
+| 3.1.x | 8.5.x | `>=9.4` |
