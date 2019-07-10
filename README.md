@@ -64,3 +64,13 @@ If you specify a branch, such as 1.x you must add -dev to the end of the version
 If you peek at the ```.gitignore``` we provide, you'll see that certain directories, including all directories containing contributed projects, are excluded from source control. This might be a bit disconcerting if you're newly arrived from Planet Drush, but in a Composer-based project like this one, **you SHOULD NOT commit your installed dependencies to source control**.
 
 When you set up the project, Composer will create a file called ```composer.lock```, which is a list of which dependencies were installed, and in which versions. **Commit ```composer.lock``` to source control!** Then, when your colleagues want to spin up their own copies of the project, all they'll have to do is run ```composer install```, which will install the correct versions of everything in ```composer.lock```.
+
+## How do I update Drupal core?
+It's counterintuitive, but **don't add `drupal/core` to your project's composer.json!** Lightning manages Drupal core for you, so adding a direct dependency on Drupal core is likely to cause problems for you in the future.
+
+Lightning's minor versions correspond to Drupal core's. So, for example, `acquia/lightning:~3.3.0` will require Drupal core 8.7.x. `acquia/lightning:~3.2.0` requires Drupal core 8.6.x, and `~3.1.0` requires Drupal core 8.5.x. If you wanted to update Drupal core from (for instance) 8.6.x to 8.7.x, you would do this by changing your requirement for `acquia/lightning`, like so:
+
+```
+composer require --no-update acquia/lightning:~3.3.0
+composer update
+```
