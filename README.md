@@ -69,8 +69,8 @@ composer update
 ```
 
 ## Compatibility table
-| `acquia/lightning` version | Drupal core version | Drush version |
-|----------------------------|---------------------|---------------|
+| Lightning version | Drupal core version | Drush version |
+|-------------------|---------------------|---------------|
 | 4.0.x | 8.7.x | `>=9.4` |
 | 3.3.x | 8.7.x | `>=9.4` |
 | 3.2.x | 8.6.x | `>=9.4` |
