@@ -6,12 +6,10 @@
     "require": {
         "acquia/d8-scaffold-files": "*@dev",
         "acquia/lightning": "^4.0",
-        "cweagans/composer-patches": "^1.6.0",
-        "drupal/core-recommended": "8.8.0-dev"
+        "cweagans/composer-patches": "^1.6.0"
     },
     "require-dev": {
-        "drush/drush": "^9.0",
-        "drupal/dev-dependencies": "8.8.0-dev"
+        "drush/drush": "^9.0"
     },
     "config": {
         "process-timeout": 0
