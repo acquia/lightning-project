@@ -4,12 +4,15 @@
     "description": "Project template for Drupal 8 sites built with the Lightning distribution.",
     "license": "GPL-2.0-or-later",
     "require": {
+        "acquia/d8-scaffold-files": "*@dev",
         "acquia/lightning": "^4.0",
         "cweagans/composer-patches": "^1.6.0",
         "drupal-composer/drupal-scaffold": "^2.0.0"
+        "drupal/core-recommended": "^8.7.0"
     },
     "require-dev": {
         "drush/drush": "^9.0"
+        "drupal/dev-dependencies": "^8.7.0"
     },
     "config": {
         "process-timeout": 0
@@ -42,7 +45,15 @@
         "installer-types": [
             "bower-asset",
             "npm-asset"
-        ]
+        ],
+        "composer-scaffold": {
+            "allowed-packages": [
+                "drupal/core"
+            ],
+            "locations": {
+                "web-root": "./docroot"
+            }
+        }
     },
     "repositories": {
         "drupal": {
