@@ -45,7 +45,8 @@
         ],
         "composer-scaffold": {
             "allowed-packages": [
-                "drupal/core"
+                "drupal/core",
+                "acquia/d8-scaffold-files"
             ],
             "locations": {
                 "web-root": "./docroot"
