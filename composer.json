@@ -6,7 +6,7 @@
     "require": {
         "acquia/lightning": "^4.0",
         "composer/installers": "^1.2",
-        "cweagans/composer-patches": "^1.6.0"
+        "cweagans/composer-patches": "^1.6.0",
         "drupal/core": "8.8.0-dev"
     },
     "require-dev": {
