@@ -1,15 +1,11 @@
-dist: trusty
 language: php
 
+php: "7.2"
+
 cache:
-  bundler: true
-  apt: true
   directories:
     - "$HOME/.composer/cache"
     - "$HOME/.drush/cache"
-    - "$HOME/.npm"
-php:
-  - 7.1
 
 env:
   - TEST_TAGS=lightning PROFILE_NAME=lightning
@@ -27,9 +23,6 @@ before_install:
   - composer --version
   - google-chrome-stable --version
 
-  - DB_URL='sqlite\://db.sqlite'
-  - HOST='http://127.0.0.1'
-
 install:
   # Add Composer's local bin directory to the PATH so that we will be running
   # our installed versions of Drush, PHPCS, Behat, PhantomJS, etc.
@@ -37,18 +30,19 @@ install:
 
   # Add dev dependencies that shouldn't be shipped to implementors and build the
   # Lightning code base.
-  - composer require --dev acquia/lightning_dev:dev-8.x-1.x drupal/media_entity_generic:^1.0 --no-update
+  - composer require --dev vaimo/binary-chromedriver drupal/drupal-extension:^3.4 drupal/media_entity_generic:^1.0 --no-update
   - composer install
 
   # Install Lightning.
-  - lightning install $DB_URL lightning $HOST
+  - drush site:install lightning --yes --db-url sqlite://db.sqlite
   # Reinstall Lightning if we want to run tests on a sub-profile.
-  - if [ $PROFILE_NAME != 'lightning' ]; then lightning install $DB_URL $PROFILE_NAME $HOST; fi
+  - if [ $PROFILE_NAME != 'lightning' ]; then drush site:install $PROFILE_NAME --yes --db-url sqlite://db.sqlite; fi
 
   # Update code base to HEAD.
   - composer nuke
   - composer require acquia/lightning:dev-8.x-4.x --no-update
   - composer update
+  - ln -s docroot/profiles/contrib/lightning/tests/lightning_extender docroot/profiles/contrib/lightning_extender
 
   # Run database and Lightning config updates.
   - drush updatedb --yes
