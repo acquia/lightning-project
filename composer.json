@@ -6,7 +6,7 @@
     "require": {
         "acquia/lightning": "^4.0",
         "cweagans/composer-patches": "^1.6.0",
-        "drupal-composer/drupal-scaffold": "^2.0.0"
+        "drupal/core-composer-scaffold": "*"
     },
     "require-dev": {
         "drush/drush": "^9.0"
@@ -16,6 +16,11 @@
     },
     "extra": {
         "composer-exit-on-patch-failure": true,
+        "drupal-scaffold": {
+            "locations": {
+                "web-root": "docroot/"
+            }
+        },
         "enable-patching": true,
         "installer-paths": {
             "docroot/core": [
@@ -57,8 +62,6 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "post-install-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-        "post-update-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
         "post-create-project-cmd": "rm -r -f .travis.yml behat.yml .travis-ci",
         "quick-start": [
             "composer install",
