@@ -47,6 +47,8 @@ install:
   - rm composer.lock
   # Update code base to HEAD.
   - composer require acquia/lightning:dev-8.x-4.x --no-update
+  # Workaround until Issue #3091285 is resolved.
+  - chmod -R +w docroot/sites/default
   - composer update
 
   # Run database and Lightning config updates.
