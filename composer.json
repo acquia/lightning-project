@@ -6,7 +6,8 @@
     "require": {
         "acquia/lightning": "^4.0",
         "cweagans/composer-patches": "^1.6.0",
-        "drupal/core-composer-scaffold": "*"
+        "drupal/core-composer-scaffold": "*",
+        "oomphinc/composer-installers-extender": "^1.1"
     },
     "require-dev": {
         "drush/drush": "^9.0"
@@ -47,7 +48,10 @@
         "installer-types": [
             "bower-asset",
             "npm-asset"
-        ]
+        ],
+        "patchLevel": {
+            "drupal/core": "-p2"
+        }
     },
     "repositories": {
         "drupal": {
