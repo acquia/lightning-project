@@ -10,12 +10,14 @@ cache:
 php:
   - '7.2'
 
-env:
-  - TEST_TAGS=lightning PROFILE_NAME=lightning
-  - TEST_TAGS=~search PROFILE_NAME=lightning_extender
-
 addons:
   chrome: stable
+
+env:
+  global:
+    - SIMPLETEST_DB=sqlite://localhost/db.sqlite
+    - SIMPLETEST_BASE_URL=http://127.0.0.1:8080
+    - SYMFONY_DEPRECATIONS_HELPER=weak
 
 before_install:
   - phpenv config-rm xdebug.ini
@@ -32,38 +34,29 @@ install:
 
   # Add dev dependencies that shouldn't be shipped to implementors and build the
   # Lightning code base.
-  - composer require --dev drupal/drupal-extension:^3.4 drupal/media_entity_generic:^1.0 vaimo/binary-chromedriver --no-update
+  - composer require --dev drupal/core-dev vaimo/binary-chromedriver --no-update
   - composer install
 
-  # Symlink the sub-profile into the main profiles directory.
-  - ln -s lightning/tests/lightning_extender docroot/profiles/contrib
-  # Install Lightning.
-  - drush site:install $PROFILE_NAME --yes --db-url sqlite://db.sqlite
-
-  # Remove certain installation artifacts.
-  - rm -r -f docroot/modules/contrib
-  - rm -r -f docroot/profiles/contrib/lightning
-  - rm -r -f vendor
-  - rm composer.lock
-  # Update code base to HEAD.
-  - composer require acquia/lightning:dev-8.x-4.x --no-update
-  # Workaround until Issue #3091285 is resolved.
+  - drush site:install lightning --yes --db-url sqlite://db.sqlite
   - chmod -R +w docroot/sites/default
-  - composer update
 
-  # Run database and Lightning config updates.
+  # Update code base to HEAD.
+  - composer require acquia/lightning:4.x-dev
+
+  # Run database and Lightning config updates, then reinstall from
+  # exported config to prove that the config is still sane.
   - drush updatedb --yes
   - drush update:lightning --no-interaction
-  - drush cache-rebuild
-  - drush pm-uninstall --yes history
-  - drush config:set --yes system.theme default bartik
+  - drush config:export --yes
+  - drush site:install --yes --existing-config
 
 before_script:
   - drush runserver --default-server=builtin --quiet 8080 &
   - chromedriver --port=4444 &
+  - cd docroot
 
 script:
-  - behat --strict --tags=${TEST_TAGS}
+  - phpunit -c core --group lightning --debug
 
 matrix:
   fast_finish: true

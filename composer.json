@@ -67,7 +67,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "post-create-project-cmd": "rm -r -f .travis.yml behat.yml .travis-ci",
+        "post-create-project-cmd": "rm -r -f .travis.yml .travis-ci",
         "quick-start": [
             "composer install",
             "php docroot/core/scripts/drupal quick-start lightning --no-interaction"
