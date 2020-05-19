@@ -10,7 +10,7 @@
         "oomphinc/composer-installers-extender": "^1.1"
     },
     "require-dev": {
-        "drush/drush": "^9.0"
+        "drush/drush": ">=9.0"
     },
     "config": {
         "process-timeout": 0
