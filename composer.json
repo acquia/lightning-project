@@ -1,45 +1,20 @@
 {
     "name": "acquia/lightning-project",
-    "description": "Project template for Drupal 8 sites built with the Lightning distribution.",
     "type": "project",
+    "description": "Project template for Drupal 8 sites built with the Lightning distribution.",
     "license": "GPL-2.0+",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "require-dev": {
-        "composer/composer": "^1.3",
-        "drush/drush": "^9.0",
-        "acquia/lightning_dev": "dev-8.x-1.x"
-    },
     "require": {
-        "drupal-composer/drupal-scaffold": "^2.0.0",
+        "acquia/headless_lightning": "~1.5.0",
         "cweagans/composer-patches": "^1.6.0",
-        "acquia/headless_lightning": "~1.5.0"
+        "drupal-composer/drupal-scaffold": "^2.0.0"
     },
-    "repositories": {
-        "drupal": {
-            "type": "composer",
-            "url": "https://packages.drupal.org/8"
-        },
-        "assets": {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
-        },
-        "dev": {
-            "type": "github",
-            "url": "https://github.com/acquia/lightning-dev",
-            "no-api": true
-        }
-    },
-    "scripts": {
-      "post-install-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-      "post-update-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-      "nuke": "rm -r -f docroot/modules/contrib docroot/profiles/contrib vendor composer.lock"
+    "require-dev": {
+        "acquia/lightning_dev": "dev-8.x-1.x",
+        "composer/composer": "^1.3",
+        "drush/drush": "^9.0"
     },
     "extra": {
-        "installer-types": [
-            "bower-asset",
-            "npm-asset"
-        ],
+        "enable-patching": true,
         "installer-paths": {
             "docroot/core": [
                 "type:drupal-core"
@@ -62,6 +37,31 @@
                 "type:drupal-drush"
             ]
         },
-        "enable-patching": true
+        "installer-types": [
+            "bower-asset",
+            "npm-asset"
+        ]
+    },
+    "repositories": {
+        "drupal": {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        "assets": {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        },
+        "dev": {
+            "type": "github",
+            "url": "https://github.com/acquia/lightning-dev",
+            "no-api": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "post-install-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+        "post-update-cmd": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+        "nuke": "rm -r -f docroot/modules/contrib docroot/profiles/contrib vendor composer.lock"
     }
 }
