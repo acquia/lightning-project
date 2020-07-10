@@ -8,7 +8,7 @@ cache:
     - "$HOME/.drush/cache"
     - "$HOME/.npm"
 php:
-  - '7.2'
+  - '7.3'
 
 addons:
   chrome: stable
@@ -34,14 +34,14 @@ install:
 
   # Add dev dependencies that shouldn't be shipped to implementors and build the
   # Lightning code base.
-  - composer require --dev "drupal/core-dev:^8" vaimo/binary-chromedriver --no-update
+  - composer require --dev "drupal/core-dev:^9" vaimo/binary-chromedriver --no-update
   - composer install
 
   - drush site:install lightning --yes --db-url sqlite://db.sqlite
   - chmod -R +w docroot/sites/default
 
   # Update code base to HEAD.
-  - composer require acquia/lightning:4.x-dev
+  - composer require acquia/lightning:5.0.x-dev
 
   # Run database and Lightning config updates, then reinstall from
   # exported config to prove that the config is still sane.
