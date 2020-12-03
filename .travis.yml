@@ -24,7 +24,7 @@ before_install:
   - phpenv config-add .travis-ci/travis.php.ini
   - phpenv rehash
 
-  - composer self-update
+  - composer self-update 1.10.16
   - composer --version
 
 install:
