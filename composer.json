@@ -10,7 +10,8 @@
         "oomphinc/composer-installers-extender": "^1.1 || ^2"
     },
     "require-dev": {
-        "drush/drush": ">=9.7"
+        "drush/drush": ">=9.7",
+        "phpspec/prophecy-phpunit": "^2"
     },
     "config": {
         "process-timeout": 0
