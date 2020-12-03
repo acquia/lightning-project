@@ -4,13 +4,14 @@
     "description": "Project template for Drupal 8 sites built with the Lightning distribution.",
     "license": "GPL-2.0-or-later",
     "require": {
-        "acquia/lightning": "~5.0.0",
+        "acquia/lightning": "~5.1.0",
         "cweagans/composer-patches": "^1.6.0",
         "drupal/core-composer-scaffold": "*",
         "oomphinc/composer-installers-extender": "^1.1 || ^2"
     },
     "require-dev": {
-        "drush/drush": ">=9.7"
+        "drush/drush": ">=9.7",
+        "phpspec/prophecy-phpunit": "^2"
     },
     "config": {
         "process-timeout": 0
