@@ -11,3 +11,5 @@
 
 # Ignore Composer-managed dependencies.
 vendor/
+/.editorconfig
+/.gitattributes
