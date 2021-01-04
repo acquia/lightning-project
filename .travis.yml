@@ -34,7 +34,9 @@ install:
 
   # Add dev dependencies that shouldn't be shipped to implementors and build the
   # Lightning code base.
-  - composer require --dev "drupal/core-dev:^9" lanfest/binary-chromedriver --no-update
+  # TODO: Remove the PHPUnit 9.4.3 requirement when Drupal 9.1.1 is released.
+  # See https://www.drupal.org/project/drupal/issues/3186443
+  - composer require --dev "drupal/core-dev:^9" phpunit/phpunit:9.4.3 lanfest/binary-chromedriver --no-update
   - composer install
 
   - drush site:install lightning --yes --db-url sqlite://db.sqlite
