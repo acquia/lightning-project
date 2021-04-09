@@ -1,8 +1,3 @@
-## November 2021: So long and thanks for all the fish!
-Acquia is **ending support for the Lightning distribution in November 2021**, simultaneously with Drupal 8. At that time, Lightning 3, 4, and 5 will cease receiving any security updates or bug fixes. It is possible to safely uninstall Lightning from your site; please see [the official announcement](https://www.acquia.com/blog/acquia-lightning-eol-2021-acquia-cms-future), [FAQ for site owners](https://support.acquia.com/hc/en-us/articles/1500006393601-Frequently-Asked-Questions-FAQ-regarding-End-of-Support-for-Acquia-Lightning), and [developer instructions](https://github.com/acquia/lightning/wiki/Uninstalling-Lightning) for more information.
-
----
-
 This is a Composer-based installer for the [Headless Lightning](https://github.com/acquia/headless-lightning) Drupal distribution. Welcome to the future!
 
 ## Get Started
@@ -40,12 +35,12 @@ But to be clear: it is still very helpful to use a site management tool like Dru
 ### Specifying a version
 you can specify a version from the command line with:
 
-    $ composer require drupal/<modulename>:<version>
+    $ composer require drupal/<modulename>:<version> 
 
 For example:
 
     $ composer require drupal/ctools:3.0.0-alpha26
-    $ composer require drupal/token:1.x-dev
+    $ composer require drupal/token:1.x-dev 
 
 In these examples, the composer version 3.0.0-alpha26 maps to the drupal.org version 8.x-3.0-alpha26 and 1.x-dev maps to 8.x-1.x branch on drupal.org.
 
