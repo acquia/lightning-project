@@ -4,7 +4,7 @@
     "description": "Project template for Drupal 8 sites built with the Lightning distribution.",
     "license": "GPL-2.0+",
     "require": {
-        "acquia/headless_lightning": "~1.8.0",
+        "acquia/headless_lightning": "~1.9.0",
         "cweagans/composer-patches": "^1.6.0",
         "drupal/core-composer-scaffold": "^9"
     },
