@@ -3,11 +3,34 @@
 #
 # If you'd like a project which sets up testing and Pipelines for you, consider
 # using Acquia BLT: https://github.com/acquia/blt
-version: 1.1.0
+version: 1.2.0
 services:
   - mysql
   - php:
       version: 7.1
+
+# To add support for syncing databases to Acquia CDEs:
+#   - Ensure your application has a CDE entitlement. @todo how does one ensure this?
+#   - Add an SSH key as described in Creating and managing your build definition
+#     file: https://docs.acquia.com/acquia-cloud/develop/pipelines/yaml/#ssh-keys
+#   - Uncomment the following cde-databases array below and change the
+#     cde-databases array values to ???. @todo what should these values be?
+#   - Generate an SSH key for this application by following the instructions
+#     here: https://docs.acquia.com/acquia-cloud/manage/ssh/generate/
+#   - Uncomment the ssh-keys value below and change the KEY_NAME and KEY_VALUE
+#     to match the results of the previous step.
+#   - Log into your Acquia Cloud account and select the source database by
+#     following these instructions: https://docs.acquia.com/acquia-cloud/develop/pipelines/databases/#selecting-the-source-database
+#   - Uncomment the post-deploy event at the bottom of this file along with the
+#     contained deploy step.
+#   - Change the arguments in the pipelines-sync-dbs command to match your
+#     database values. @todo what should these value be?
+# cde-databases:
+#   - db1
+#   - db2
+# ssh-keys:
+#  KEY_NAME:
+#    secure: KEY_VALUE
 
 events:
   build:
@@ -42,3 +65,15 @@ events:
           type: script
           script:
             - composer install --no-dev --optimize-autoloader
+
+  # To add support for syncing databases to Acquia CDEs uncomment the
+  # post-deploy event and the contained deploy step below. Additionally, you
+  # must uncomment the cde-databases array at the top of this file and follow
+  # the instructions in the comment above that setting.
+  # post-deploy:
+  # steps:
+  #   - deploy:
+  #       type: script
+  #       script:
+  #         - pipelines-deploy
+  #         - pipelines-sync-dbs db1 db2
