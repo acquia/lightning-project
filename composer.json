@@ -64,7 +64,7 @@
             "url": "https://asset-packagist.org"
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "beta",
     "prefer-stable": true,
     "scripts": {
         "post-create-project-cmd": "rm -r -f .travis.yml .travis-ci",
